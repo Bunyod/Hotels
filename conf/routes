@@ -6,7 +6,7 @@
 GET         /                    controllers.Application.index
 
 GET         /users               @controllers.Users.index
-POST        /users               @controllers.Users.saveUser
+POST        /users               @controllers.Users.
 
 GET         /hotels              @controllers.Hotels.allHotels
 POST        /hotels              @controllers.Hotels.saveHotel

@@ -145,7 +145,7 @@ case class Review(id: Option[Int],
                       createdAt: Date = new Date()) {
 }
 
-class ReviewTable(tag: Tag) extends Table[Review](tag, "REVIEW")  with Date2SqlDate {
+class ReviewsTable(tag: Tag) extends Table[Review](tag, "REVIEW")  with Date2SqlDate {
 
   val hotels = TableQuery[HotelsTable]
   val users = TableQuery[UsersTable]

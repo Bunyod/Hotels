@@ -13,7 +13,10 @@ import scala.slick.lifted.TableQuery
 class Hotels extends Controller {
 
   val hotels = TableQuery[HotelsTable]
-  val reviews = TableQuery[ReviewTable]
+  val reviews = TableQuery[ReviewsTable]
+  val rooms = TableQuery[RoomsTable]
+  val roomTypes = TableQuery[RoomTypesTable]
+
 
   def allHotels = DBAction { implicit rs =>
     Ok(toJson(hotels.list))
@@ -30,13 +33,41 @@ class Hotels extends Controller {
   }
 
   def hotelReviews(id: Int) = DBAction { implicit rs =>
-    Ok(toJson(hotels.filter(_.id === id).list))
+    Ok(toJson(reviews.filter(_.hotelId === id).list))
   }
 
   def addReview = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[Review].map { review =>
       val reviewId = (reviews returning reviews.map(_.id)) += review
       val r = Map("id" -> reviewId)
+      Ok(toJson(r))
+    }.recoverTotal { errors =>
+      BadRequest(errors.toString)
+    }
+  }
+
+  def hotelRooms(id: Int) = DBAction { implicit rs =>
+    Ok(toJson(rooms.filter(_.hotelId === id).list))
+  }
+
+  def addRoom = DBAction(parse.json) { implicit rs =>
+    rs.request.body.validate[Room].map { room =>
+      val roomId = (rooms returning rooms.map(_.id)) += room
+      val r = Map("id" -> roomId)
+      Ok(toJson(r))
+    }.recoverTotal { errors =>
+      BadRequest(errors.toString)
+    }
+  }
+
+  def roomTypeList(id: Int) = DBAction { implicit rs =>
+    Ok(toJson(roomTypes.list))
+  }
+
+  def addRoomType = DBAction(parse.json) { implicit rs =>
+    rs.request.body.validate[Room].map { room =>
+      val roomId = (rooms returning rooms.map(_.id)) += room
+      val r = Map("id" -> roomId)
       Ok(toJson(r))
     }.recoverTotal { errors =>
       BadRequest(errors.toString)
