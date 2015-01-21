@@ -19,7 +19,7 @@ class Users extends Controller {
     Ok(toJson(users.list))
   }
 
-  def saveUser = DBAction(parse.json) { implicit rs =>
+  def addUser = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[User].map { user =>
       val userId = (users returning users.map(_.id)) += user
       val r = Map("id" -> userId)

@@ -3,13 +3,22 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index
+GET         /                            controllers.Application.index
 
-GET         /users               @controllers.Users.index
-POST        /users               @controllers.Users.
+GET         /users/list                  @controllers.Users.index
+POST        /users/add                   @controllers.Users.addUser
 
-GET         /hotels              @controllers.Hotels.allHotels
-POST        /hotels              @controllers.Hotels.saveHotel
+GET         /hotels/list                 @controllers.Hotels.allHotels
+POST        /hotels/add                  @controllers.Hotels.addHotel
+
+GET         /hotel/:id/reviews/list      @controllers.Hotels.hotelReviews(id: Int)
+POST        /hotel/:id/reviews/add       @controllers.Hotels.addReview(id: Int)
+
+GET         /hotel/:id/rooms/list        @controllers.Hotels.hotelRooms(id: Int)
+POST        /hotel/:id/rooms/add         @controllers.Hotels.addRoom(id: Int)
+
+GET         /hotels/roomTypes/list       @controllers.Hotels.roomTypeList
+POST        /hotels//roomTypes/add       @controllers.Hotels.addRoomType
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -7,8 +7,8 @@ lazy val `mydissertation` = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.2"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.slick" %% "slick" % "2.1.0",
-  "com.typesafe.play" %% "play-slick" % "0.8.0",
+  "com.typesafe.slick" %% "slick" % "2.1.0" withJavadoc() withSources(),
+  "com.typesafe.play" %% "play-slick" % "0.8.0" withJavadoc() withSources(),
   "org.postgresql" % "postgresql" % "9.3-1100-jdbc4",
   // Logging
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
@@ -19,4 +19,4 @@ libraryDependencies ++= Seq(
 
 
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+//unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
