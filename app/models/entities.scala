@@ -145,7 +145,7 @@ case class Review(id: Option[Int],
                       createdAt: Date = new Date()) {
 }
 
-class ReviewsTable(tag: Tag) extends Table[Review](tag, "REVIEW")  with Date2SqlDate {
+class ReviewsTable(tag: Tag) extends Table[Review](tag, "REVIEW") with Date2SqlDate {
 
   val hotels = TableQuery[HotelsTable]
   val users = TableQuery[UsersTable]
@@ -254,6 +254,45 @@ class HotelTypesTable(tag: Tag) extends Table[HotelType](tag, "HOTEL_TYPE") {
   def * = (id.?, name) <>(HotelType.tupled, HotelType.unapply _)
 }
 
+case class Reservation(id: Option[Int],
+                       hotelId: Int,
+                       userId: Int,
+                       checkInDate: Date = new Date(),
+                       checkOutDate: Date = new Date(),
+                       roomType: Int,
+                       adults: Int,
+                       children: Int) {
+}
+
+class ReservationsTable(tag: Tag) extends Table[Reservation](tag, "RESERVATION") with Date2SqlDate {
+
+  val hotels = TableQuery[HotelsTable]
+  val roomTypes = TableQuery[RoomTypesTable]
+
+  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+
+  def hotelId = column[Int]("HOTEL_ID", O.NotNull)
+
+  def userId = column[Int]("USER_ID", O.NotNull)
+
+  def checkInDate = column[Date]("CHECK_IN_DATE")
+
+  def checkOutDate = column[Date]("CHECK_OUT_DATE")
+
+  def roomType = column[Int]("ROOM_TYPE", O.NotNull)
+
+  def adults = column[Int]("ADULTS", O.NotNull)
+
+  def children = column[Int]("CHILDREN", O.NotNull)
+
+  def * = (id.?, hotelId, userId, checkInDate, checkOutDate, roomType, adults, children) <>(Reservation.tupled, Reservation.unapply _)
+
+  def hotel = foreignKey("RESERVATION_FK_HOTEL_ID", hotelId, hotels)(_.id)
+  def roomTypeId = foreignKey("RESERVATION_FK_ROOM_TYPE", roomType, roomTypes)(_.id)
+
+
+}
+
 object JsonFormats {
 
   import play.api.libs.json.Json
@@ -341,4 +380,15 @@ object JsonFormats {
     (JsPath \ "name").read[String]
     )(HotelType)
 
+  implicit val reservationWrites = Json.writes[Reservation]
+  implicit val reservataionReads: Reads[Reservation] = (
+    ( JsPath \ "id").readNullable[Int] and
+      (JsPath \ "hotelId").read[Int] and
+      (JsPath \ "userId").read[Int] and
+      (JsPath \ "checkInDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
+      (JsPath \ "checkOutDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
+      (JsPath \ "roomType").read[Int] and
+      (JsPath \ "adults").read[Int] and
+      (JsPath \ "children").read[Int]
+    )(Reservation)
 }
