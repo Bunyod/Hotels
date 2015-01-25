@@ -4,6 +4,9 @@ version := "1.0"
 
 lazy val `mydissertation` = (project in file(".")).enablePlugins(PlayScala)
 
+herokuAppName in Compile := "hotel-booking-7788"
+
+
 scalaVersion := "2.11.2"
 
 libraryDependencies ++= Seq(
@@ -17,6 +20,9 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "log4j-over-slf4j" % "1.7.5"
 )
 
-
+//// Auth
+//"jp.t2v" %% "play2-auth" % "0.12.0" withSources() withJavadoc(),
+//"jp.t2v" %% "play2-auth-test" % "0.12.0" % "test" withSources() withJavadoc(),
+//"jp.t2v" %% "stackable-controller" % "0.4.0" withSources() withJavadoc()
 
 //unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
