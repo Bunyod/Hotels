@@ -11,6 +11,9 @@ POST        /users/add                   @controllers.Users.addUser
 GET         /hotels/list                 @controllers.Hotels.allHotels
 POST        /hotels/add                  @controllers.Hotels.addHotel
 
+GET         /hotelTypes/list             @controllers.Hotels.hotelTypesList
+POST        /hotelTypes/add              @controllers.Hotels.addHotelType
+
 GET         /hotel/:id/reviews/list      @controllers.Hotels.hotelReviews(id: Int)
 POST        /hotel/:id/reviews/add       @controllers.Hotels.addReview(id: Int)
 

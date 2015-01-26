@@ -16,6 +16,7 @@ class Hotels extends Controller {
   val reviews = TableQuery[ReviewsTable]
   val rooms = TableQuery[RoomsTable]
   val roomTypes = TableQuery[RoomTypesTable]
+  val hotelTypes = TableQuery[HotelTypesTable]
 
 
   def allHotels = DBAction { implicit rs =>
@@ -68,6 +69,20 @@ class Hotels extends Controller {
     rs.request.body.validate[Room].map { room =>
       val roomId = (rooms returning rooms.map(_.id)) += room
       val r = Map("id" -> roomId)
+      Ok(toJson(r))
+    }.recoverTotal { errors =>
+      BadRequest(errors.toString)
+    }
+  }
+
+  def hotelTypesList = DBAction { implicit rs =>
+      Ok(toJson(hotelTypes.list))
+  }
+
+  def addHotelType = DBAction(parse.json) { implicit rs =>
+    rs.request.body.validate[HotelType].map { hotelType =>
+      val hotelTypeId = (hotelTypes returning hotelTypes.map(_.id)) += hotelType
+      val r = Map("id" -> hotelTypeId)
       Ok(toJson(r))
     }.recoverTotal { errors =>
       BadRequest(errors.toString)
