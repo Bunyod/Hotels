@@ -5,6 +5,7 @@ Getting users
 http://uzhotels.herokuapp.com/users/list
 
 Add user
+
 http://uzhotels.herokuapp.com/users/add
 
 {
