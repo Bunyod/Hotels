@@ -5,12 +5,17 @@ import play.api.db.slick._
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.libs.json.Json._
-import models._
 import scala.slick.lifted.TableQuery
-import models.JsonFormats._
 
+/**
+ * Created by bunyod on 1/19/15.
+ */
 
 class Users extends Controller {
+
+
+  import models._
+  import models.JsonFormats._
 
   val users = TableQuery[UsersTable]
 

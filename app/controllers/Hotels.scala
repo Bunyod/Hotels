@@ -9,6 +9,9 @@ import play.api.mvc._
 import models.JsonFormats._
 import scala.slick.lifted.TableQuery
 
+/**
+ * Created by bunyod on 1/19/15.
+ */
 
 class Hotels extends Controller {
 
