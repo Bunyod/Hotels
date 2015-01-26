@@ -15,6 +15,7 @@ http://uzhotels.herokuapp.com/users/add
 }
 
 Get hotels
+
 http://uzhotels.herokuapp.com/hotels/list
 
 
