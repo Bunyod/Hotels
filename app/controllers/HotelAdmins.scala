@@ -10,6 +10,9 @@ import play.api.mvc._
 
 import scala.slick.lifted.TableQuery
 
+/**
+ * Created by bunyod on 1/19/15.
+ */
 
 class HotelAdmins extends Controller {
 
@@ -29,4 +32,5 @@ class HotelAdmins extends Controller {
       BadRequest(errors.toString)
     }
   }
+
 }

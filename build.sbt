@@ -17,12 +17,12 @@ libraryDependencies ++= Seq(
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "ch.qos.logback" % "logback-classic" % "1.0.13",
   "ch.qos.logback" % "logback-core" % "1.0.13",
-  "org.slf4j" % "log4j-over-slf4j" % "1.7.5"
+  "org.slf4j" % "log4j-over-slf4j" % "1.7.5",
+  // Auth
+  "jp.t2v" %% "play2-auth" % "0.12.0" withSources() withJavadoc(),
+  "jp.t2v" %% "play2-auth-test" % "0.12.0" % "test" withSources() withJavadoc(),
+  "jp.t2v" %% "stackable-controller" % "0.4.0" withSources() withJavadoc()
 )
 
-//// Auth
-//"jp.t2v" %% "play2-auth" % "0.12.0" withSources() withJavadoc(),
-//"jp.t2v" %% "play2-auth-test" % "0.12.0" % "test" withSources() withJavadoc(),
-//"jp.t2v" %% "stackable-controller" % "0.4.0" withSources() withJavadoc()
 
 //unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

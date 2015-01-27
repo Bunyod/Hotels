@@ -1,5 +1,6 @@
 package controllers
 
+import play.api.Logger
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick._
 import play.api.Play.current
@@ -8,9 +9,14 @@ import play.api.libs.json.Json._
 import play.api.mvc._
 import models.JsonFormats._
 import scala.slick.lifted.TableQuery
+import com.typesafe.scalalogging.slf4j.LazyLogging
 
 
-class Hotels extends Controller {
+/**
+ * Created by bunyod on 1/19/15.
+ */
+
+class Hotels extends Controller with HotelAuth {
 
   val hotels = TableQuery[HotelsTable]
   val reviews = TableQuery[ReviewsTable]
@@ -23,13 +29,17 @@ class Hotels extends Controller {
     Ok(toJson(hotels.list))
   }
 
-  def addHotel = DBAction(parse.json) { implicit rs =>
-    rs.request.body.validate[Hotel].map { hotel =>
-      val hotelId = (hotels returning hotels.map(_.id)) += hotel
-      val r = Map("id" -> hotelId)
-      Ok(toJson(r))
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
+  def addHotel = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
+    DBAction(parse.json) { implicit req =>
+      req.request.body.validate[Hotel].map { hotel =>
+        Logger.info(s"CreateHotel Hotel:$hotel")
+
+        val hotelId = (hotels returning hotels.map(_.id)) += hotel
+        val r = Map("id" -> hotelId)
+        Ok(toJson(r))
+      }.recoverTotal { errors =>
+        BadRequest(errors.toString)
+      }
     }
   }
 
@@ -37,27 +47,31 @@ class Hotels extends Controller {
     Ok(toJson(reviews.filter(_.hotelId === id).list))
   }
 
-  def addReview(id: Int) = DBAction(parse.json) { implicit rs =>
-    rs.request.body.validate[Review].map { review =>
-      val reviewId = (reviews returning reviews.map(_.id)) += review
-      val r = Map("id" -> reviewId)
-      Ok(toJson(r))
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
+  def addReview(id: Int) = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.USER)) { implicit rs =>
+    DBAction(parse.json) { implicit req =>
+      req.request.body.validate[Review].map { review =>
+        val reviewId = (reviews returning reviews.map(_.id)) += review
+        val r = Map("id" -> reviewId)
+        Ok(toJson(r))
+      }.recoverTotal { errors =>
+        BadRequest(errors.toString)
+      }
     }
   }
 
-  def hotelRooms(id: Int) = DBAction { implicit rs =>
+  def hotelRooms(id: Int) = DBAction(parse.json) { implicit res =>
     Ok(toJson(rooms.filter(_.hotelId === id).list))
   }
 
-  def addRoom(id: Int) = DBAction(parse.json) { implicit rs =>
-    rs.request.body.validate[Room].map { room =>
-      val roomId = (rooms returning rooms.map(_.id)) += room
-      val r = Map("id" -> roomId)
-      Ok(toJson(r))
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
+  def addRoom(id: Int) = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
+    DBAction(parse.json) { implicit req =>
+      req.request.body.validate[Room].map { room =>
+        val roomId = (rooms returning rooms.map(_.id)) += room
+        val r = Map("id" -> roomId)
+        Ok(toJson(r))
+      }.recoverTotal { errors =>
+        BadRequest(errors.toString)
+      }
     }
   }
 
@@ -79,13 +93,15 @@ class Hotels extends Controller {
       Ok(toJson(hotelTypes.list))
   }
 
-  def addHotelType = DBAction(parse.json) { implicit rs =>
-    rs.request.body.validate[HotelType].map { hotelType =>
-      val hotelTypeId = (hotelTypes returning hotelTypes.map(_.id)) += hotelType
-      val r = Map("id" -> hotelTypeId)
-      Ok(toJson(r))
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
+  def addHotelType = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.USER)) { implicit rs =>
+    DBAction(parse.json) { implicit req =>
+      req.request.body.validate[HotelType].map { hotelType =>
+        val hotelTypeId = (hotelTypes returning hotelTypes.map(_.id)) += hotelType
+        val r = Map("id" -> hotelTypeId)
+        Ok(toJson(r))
+      }.recoverTotal { errors =>
+        BadRequest(errors.toString)
+      }
     }
   }
 

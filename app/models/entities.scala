@@ -1,9 +1,30 @@
 package models
 
 import play.api.db.slick.Config.driver.simple._
+import play.api.i18n.{Lang, Messages}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import java.util.Date
+
+/**
+ * Created by bunyod on 1/19/15.
+ */
+
+trait BaseEnum extends Enumeration {
+  implicit val enumMapper = MappedColumnType.base[Value, Int](_.id, this.apply)
+
+  val enumPrefix = ""
+
+  def getI18eName(name: String): String = {
+    Messages(s"${enumPrefix}.${name}")(Lang("en"))
+  }
+
+  def getEnumList(): Seq[(Int, String)] = {
+    values.toSeq map { name =>
+      (name.id, Messages(s"${enumPrefix}.${name.toString}")(Lang("en")))
+    }
+  }
+}
 
 trait Date2SqlDate {
   implicit val date2SqlDate = MappedColumnType.base[Date, java.sql.Timestamp](
@@ -81,25 +102,25 @@ class HotelsTable(tag: Tag) extends Table[Hotel](tag, "HOTEL") {
 
 }
 
-case class User(id: Option[Int],
-                username: String,
-                email: String,
-                age: Int) {
-}
-
-class UsersTable(tag: Tag) extends Table[User](tag, "USER") {
-
-  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
-
-  def username = column[String]("USERNAME", O.NotNull)
-
-  def email = column[String]("EMAIL", O.NotNull)
-
-  def age = column[Int]("AGE", O.NotNull)
-
-  def * = (id.?, username, email, age) <>(User.tupled, User.unapply _)
-
-}
+//case class User(id: Option[Int],
+//                username: String,
+//                email: String,
+//                age: Int) {
+//}
+//
+//class UsersTable(tag: Tag) extends Table[User](tag, "USER") {
+//
+//  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+//
+//  def username = column[String]("USERNAME", O.NotNull)
+//
+//  def email = column[String]("EMAIL", O.NotNull)
+//
+//  def age = column[Int]("AGE", O.NotNull)
+//
+//  def * = (id.?, username, email, age) <>(User.tupled, User.unapply _)
+//
+//}
 
 case class HotelAdmin(id: Option[Int],
                       hotelId: Int,
@@ -297,13 +318,20 @@ object JsonFormats {
 
   import play.api.libs.json.Json
 
-  implicit val userWrites = Json.writes[User]
-  implicit val userReads: Reads[User] = (
-    ( JsPath \ "id").readNullable[Int] and
-      (JsPath \ "username").read[String] and
-      (JsPath \ "email").read[String] and
-      (JsPath \ "age").read[Int]
-    )(User)
+  implicit val userRoleFormat = EnumUtils.enumFormat(UserRoleEnum)
+  implicit val userStateFormat = EnumUtils.enumFormat(UserStateEnum)
+
+  implicit val credentialFormat = Json.format[Credential]
+
+  implicit val userFormat = Json.format[Account]
+
+//  implicit val userWrites = Json.writes[User]
+//  implicit val userReads: Reads[User] = (
+//    ( JsPath \ "id").readNullable[Int] and
+//      (JsPath \ "username").read[String] and
+//      (JsPath \ "email").read[String] and
+//      (JsPath \ "age").read[Int]
+//    )(User)
 
   implicit val hotelWrites = Json.writes[Hotel]
   implicit val hotelReads: Reads[Hotel] = (

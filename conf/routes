@@ -3,31 +3,33 @@
 # ~~~~
 
 # Home page
-GET         /                            controllers.Application.index
+GET         /                              controllers.Application.index
 
-GET         /users/list                  @controllers.Users.index
-POST        /users/add                   @controllers.Users.addUser
+POST        /users/singIn                  @controllers.Users.signIn
 
-GET         /hotels/list                 @controllers.Hotels.allHotels
-POST        /hotels/add                  @controllers.Hotels.addHotel
+GET         /users/list                    @controllers.Users.index
+POST        /users/add                     @controllers.Users.addUser
 
-GET         /hotelTypes/list             @controllers.Hotels.hotelTypesList
-POST        /hotelTypes/add              @controllers.Hotels.addHotelType
+GET         /hotels/list                   @controllers.Hotels.allHotels
+POST        /hotels/add                    @controllers.Hotels.addHotel
 
-GET         /hotel/:id/reviews/list      @controllers.Hotels.hotelReviews(id: Int)
-POST        /hotel/:id/reviews/add       @controllers.Hotels.addReview(id: Int)
+GET         /hotelTypes/list               @controllers.Hotels.hotelTypesList
+POST        /hotelTypes/add                @controllers.Hotels.addHotelType
 
-GET         /hotel/:id/rooms/list        @controllers.Hotels.hotelRooms(id: Int)
-POST        /hotel/:id/rooms/add         @controllers.Hotels.addRoom(id: Int)
+GET         /hotel/:id/reviews/list        @controllers.Hotels.hotelReviews(id: Int)
+POST        /hotel/:id/reviews/add         @controllers.Hotels.addReview(id: Int)
 
-GET         /hotels/roomTypes/list       @controllers.Hotels.roomTypeList
-POST        /hotels/roomTypes/add        @controllers.Hotels.addRoomType
+GET         /hotel/:id/rooms/list          @controllers.Hotels.hotelRooms(id: Int)
+POST        /hotel/:id/rooms/add           @controllers.Hotels.addRoom(id: Int)
 
-GET         /reservations/list           @controllers.Reservations.reservationsList(userId: Int)
-POST        /reservations/add            @controllers.Reservations.addReservation
+GET         /hotels/roomTypes/list         @controllers.Hotels.roomTypeList
+POST        /hotels/roomTypes/add          @controllers.Hotels.addRoomType
+
+GET         /reservations/list             @controllers.Reservations.reservationsList(userId: Int)
+POST        /reservations/add              @controllers.Reservations.addReservation
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file                  controllers.Assets.at(path="/public", file)
 
     
