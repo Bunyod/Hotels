@@ -12,7 +12,7 @@ class UsersDao {
 
   val users = TableQuery[UsersTable]
 
-  def saveUser(user: User)(implicit session: Session) = {
+  def saveUser(user: Account)(implicit session: Session) = {
     val userId = (users returning users.map(_.id)) += user
   }
 

@@ -42,30 +42,14 @@ trait HotelAuthConfig extends AuthConfig {
   import play.api.Play.current
 
   private val users = TableQuery[UsersTable]
+  private val hotels = TableQuery[HotelsTable]
 
-//  def getOwnCompany(companyId: Int): String =  DB.withSession { implicit session =>
-//    val filteredCompany = (for {
-//      company <- clientCompanies if company.id === companyId
-//    } yield (company.name)).firstOption
-//
-//    filteredCompany.head
-//  }
+  def getOwnHotel(hotelId: Int): String = DB.withSession { implicit session =>
+    val filteredHotel = (for {
+      hotel <- hotels if hotel.id === hotelId
+    } yield (hotel.name)).firstOption
 
-//  def ownCampaign(campaignId: Int): Authority = { user =>
-//    if (isAdmin(user)) Future successful true
-//    else
-//      DB.withSession { implicit session => Future.successful(
-//        (for {
-//          campaign <- campaigns if campaign.id === campaignId
-//        } yield (campaign.clientCompanyId === user.clientCompanyId)).firstOption.getOrElse(false))
-//      }
-//  }
-
-  def ownCampaign(campaignId: Int, requiredRole: UserRole): Authority = { user =>
-    hasRole(requiredRole, user) match {
-      case false => Future successful false
-      case true => ownCampaign(campaignId)(user)
-    }
+    filteredHotel.head
   }
 
   def hasRole(requiredRole: UserRole): Authority = { user =>
@@ -76,8 +60,8 @@ trait HotelAuthConfig extends AuthConfig {
 
   private def hasRole(requiredRole: UserRole, user: User) = {
     user.role match {
-      case UserRoleEnum.ADMIN => true
-      case UserRoleEnum.MANAGER if requiredRole != UserRoleEnum.ADMIN => true
+      case UserRoleEnum.ADMINISTATOR => true
+      case UserRoleEnum.ADMIN if requiredRole != UserRoleEnum.ADMIN => true
       case UserRoleEnum.USER if requiredRole == UserRoleEnum.USER => true
       case _ => false
     }
@@ -100,7 +84,7 @@ trait HotelAuthConfig extends AuthConfig {
    * A type that represents a user in your application.
    * `User`, `Account` and so on.
    */
-  type User = User
+  type User = Account
 
   /**
    * A type that is defined by every action for authorization.

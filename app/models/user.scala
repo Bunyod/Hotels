@@ -29,16 +29,17 @@ object UserRoleEnum extends BaseEnum {
 case class Credential(login: String,
                       password: String)
 
-case class User(id: Option[Int],
+case class Account(id: Option[Int],
                 email: String,
                 password: String,
                 firstName: String,
                 lastName: String,
+                age: Int,
                 role: UserRoleEnum.UserRole,
                 status: Int
                  )
 
-class UsersTable(tag: Tag) extends Table[User](tag, "USER") {
+class UsersTable(tag: Tag) extends Table[Account](tag, "ACCOUNT") {
 
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 
@@ -50,13 +51,15 @@ class UsersTable(tag: Tag) extends Table[User](tag, "USER") {
 
   def lastName = column[String]("LAST_NAME", O.NotNull)
 
+  def age = column[Int]("AGE", O.NotNull)
+
   def role = column[UserRoleEnum.UserRole]("ROLE", O.NotNull)
 
   def status = column[Int]("STATUS", O.NotNull)
 
-  def * = (id.?, email, password, firstName, lastName, role, status) <>(User.tupled, User.unapply _)
+  def * = (id.?, email, password, firstName, lastName, age, role, status) <>(Account.tupled, Account.unapply _)
 
   val sorting = Map(
     "id" -> id, "firstName" -> firstName, "lastName" -> lastName,
-    "email" -> email, "password" -> password, "role" -> role, "status" -> status)
+    "email" -> email, "password" -> password, "age" -> age, "role" -> role, "status" -> status)
 }

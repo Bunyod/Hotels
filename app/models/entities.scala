@@ -6,6 +6,9 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import java.util.Date
 
+/**
+ * Created by bunyod on 1/19/15.
+ */
 
 trait BaseEnum extends Enumeration {
   implicit val enumMapper = MappedColumnType.base[Value, Int](_.id, this.apply)
@@ -314,6 +317,13 @@ class ReservationsTable(tag: Tag) extends Table[Reservation](tag, "RESERVATION")
 object JsonFormats {
 
   import play.api.libs.json.Json
+
+  implicit val userRoleFormat = EnumUtils.enumFormat(UserRoleEnum)
+  implicit val userStateFormat = EnumUtils.enumFormat(UserStateEnum)
+
+  implicit val credentialFormat = Json.format[Credential]
+
+  implicit val userFormat = Json.format[Account]
 
 //  implicit val userWrites = Json.writes[User]
 //  implicit val userReads: Reads[User] = (
