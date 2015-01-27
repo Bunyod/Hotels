@@ -1,5 +1,6 @@
 package controllers
 
+import play.api.Logger
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick._
 import play.api.Play.current
@@ -31,6 +32,8 @@ class Hotels extends Controller with HotelAuth {
   def addHotel = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
     DBAction(parse.json) { implicit req =>
       req.request.body.validate[Hotel].map { hotel =>
+        Logger.info(s"CreateHotel Hotel:$hotel")
+
         val hotelId = (hotels returning hotels.map(_.id)) += hotel
         val r = Map("id" -> hotelId)
         Ok(toJson(r))
@@ -60,7 +63,7 @@ class Hotels extends Controller with HotelAuth {
     Ok(toJson(rooms.filter(_.hotelId === id).list))
   }
 
-  def addRoom(id: Int) = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.USER)) { implicit rs =>
+  def addRoom(id: Int) = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
     DBAction(parse.json) { implicit req =>
       req.request.body.validate[Room].map { room =>
         val roomId = (rooms returning rooms.map(_.id)) += room
