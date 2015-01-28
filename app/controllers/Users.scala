@@ -7,12 +7,14 @@ import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.libs.json.Json._
 import scala.slick.lifted.TableQuery
+import play.api._
+
 
 /**
  * Created by bunyod on 1/19/15.
  */
 
-class Users extends Controller {
+class Users extends Controller with HotelAuth {
 
 
   import models._
@@ -35,46 +37,21 @@ class Users extends Controller {
     }
   }
 
-  def deleteUser(id: Int) = DBAction { implicit rs =>
-    findById(id) match {
-      case Some(entity) => {
-        users.filter(_.id === id).delete;
-        Ok("")
+  def deleteUser(id: Int) = AuthAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
+    DBAction { implicit req =>
+      findById(id) match {
+        case Some(entity) => {
+          users.filter(_.id === id).delete;
+          Ok("User deleted")
+        }
+        case None => Ok("")
       }
-      case None => Ok("")
     }
   }
 
   def findById(id: Int)(implicit session: play.api.db.slick.Config.driver.simple.Session): Option[Account] = {
     val byId = users.findBy(_.id)
     byId(id).list.headOption
-  }
-
-  def signIn = DBAction(parse.json) { implicit rs =>
-    Logger.info(s"signIn")
-    rs.request.body.validate[Credential].map { credential =>
-      val found = users.filter { r => r.email === credential.login && r.password === credential.password}
-      Logger.info(s"FOUND_USER = $found")
-      found.list.headOption match {
-        case Some(user) =>
-          Logger.info(s"Hiiiiiiiiii welcomeeee  = ${user.role}")
-
-          Ok("").withSession(
-            "loggedIn" -> "true"
-          )
-        case _ =>
-          BadRequest("Incorrect login or password")
-      }
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
-    }
-  }
-
-  def signOut() = {
-    Logger.info("SingOut")
-    Redirect(routes.Hotels.allHotels()).withSession(
-      request.session - "loggedIn"
-    )
   }
 
   def updateUser(id: Int) = DBAction(parse.json) { implicit rs =>

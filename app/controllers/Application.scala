@@ -2,12 +2,17 @@ package controllers
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import jp.t2v.lab.play2.auth.{OptionalAuthElement, LoginLogout}
-import models.UserRoleEnum._
+import models.UserRoleEnum.UserRole
 import models._
-import play.api._
-import play.api.db.slick._
-import play.api.libs.json.Json
+
 import play.api.mvc._
+import play.api.libs.json._
+import play.api.Play.current
+import play.api.db.slick.Config.driver.simple._
+import play.api.db.slick.DB
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+
+import models.JsonFormats._
 import views.html
 
 import scala.concurrent.Future
@@ -20,24 +25,12 @@ import scala.slick.lifted.TableQuery
 object Application extends Controller with LoginLogout with OptionalAuthElement with HotelAuthConfig with LazyLogging {
   val users = TableQuery[UsersTable]
 
-  def index = Action {
-    Redirect(routes.Users.index)
-  }
-
   def _getUserPermission(userRole: UserRole) = {
     val isAdministrator = userRole == UserRoleEnum.ADMINISTATOR
     val isAdministratorOrAdmin = isAdministrator || userRole == UserRoleEnum.ADMIN
     val permission = Permission(
-      MessageContent = PermValue(isAdministratorOrAdmin, isAdministratorOrAdmin),
-      Campaign = PermValue(isAdministratorOrAdmin, isAdministratorOrAdmin),
-      Report = PermValue(true, true),
-      Configuration = PermValue(isAdministrator, isAdministrator),
-      Sweepstake = PermValue(isAdministrator, isAdministrator),
-      Multicast = PermValue(isAdministratorOrAdmin, isAdministratorOrAdmin),
-      MulticastByDate = PermValue(isAdministratorOrAdmin, isAdministratorOrAdmin),
-      ContentType = PermValue(isAdministrator, isAdministrator),
-      ShortCode = PermValue(isAdministrator, isAdministrator),
-      User = PermValue(isAdministrator, isAdministrator)
+      Hotel = PermHotel(isAdministratorOrAdmin, isAdministratorOrAdmin),
+      User = PermUser(isAdministrator, isAdministrator)
     )
     Json.toJson(permission)
   }
@@ -77,6 +70,5 @@ object Application extends Controller with LoginLogout with OptionalAuthElement 
       "success" -> "You've been logged out"
     ))
   }
-
 
 }

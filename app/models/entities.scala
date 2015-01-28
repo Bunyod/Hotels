@@ -33,19 +33,12 @@ trait Date2SqlDate {
   )
 }
 
-case class PermValue (View: Boolean, Modify: Boolean)
+case class PermUser(View: Boolean, Modify: Boolean)
+case class PermHotel(View: Boolean, Modify: Boolean)
 
-case class Permission (
-                        MessageContent: PermValue,
-                        Campaign: PermValue,
-                        Report: PermValue,
-                        Configuration: PermValue,
-                        Sweepstake: PermValue,
-                        Multicast: PermValue,
-                        MulticastByDate: PermValue,
-                        ContentType: PermValue,
-                        ShortCode: PermValue,
-                        User: PermValue) {
+
+case class Permission (Hotel: PermHotel,
+                       User: PermUser) {
 }
 
 case class Hotel(id: Option[Int],
@@ -341,6 +334,11 @@ object JsonFormats {
 
   implicit val credentialFormat = Json.format[Credential]
 
+  implicit val permUserWrites = Json.writes[PermUser]
+  implicit val permHotelWrites = Json.writes[PermHotel]
+
+  implicit val permissionWrites = Json.writes[Permission]
+
   implicit val userFormat = Json.format[Account]
 
 //  implicit val userWrites = Json.writes[User]
@@ -438,4 +436,6 @@ object JsonFormats {
       (JsPath \ "adults").read[Int] and
       (JsPath \ "children").read[Int]
     )(Reservation)
+
+
 }
