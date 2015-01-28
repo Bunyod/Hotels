@@ -54,9 +54,11 @@ class Users extends Controller {
     Logger.info(s"signIn")
     rs.request.body.validate[Credential].map { credential =>
       val found = users.filter { r => r.email === credential.login && r.password === credential.password}
-
+      Logger.info(s"FOUND_USER = $found")
       found.list.headOption match {
         case Some(user) =>
+          Logger.info(s"Hiiiiiiiiii welcomeeee  = ${user.role}")
+
           Ok("").withSession(
             "loggedIn" -> "true"
           )
@@ -68,6 +70,13 @@ class Users extends Controller {
     }
   }
 
+  def signOut() = {
+    Logger.info("SingOut")
+    Redirect(routes.Hotels.allHotels()).withSession(
+      request.session - "loggedIn"
+    )
+  }
+
   def updateUser(id: Int) = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[Account].map { user =>
       users.filter(_.id === id).update(user)
@@ -76,6 +85,5 @@ class Users extends Controller {
       BadRequest(errors.toString)
     }
   }
-
 
 }

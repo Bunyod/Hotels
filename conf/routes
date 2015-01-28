@@ -6,6 +6,7 @@
 GET         /                              controllers.Application.index
 
 POST        /users/singIn                  @controllers.Users.signIn
+POST        /users/singOut                  @controllers.Users.signOut
 
 GET         /users/list                    @controllers.Users.index
 POST        /users/add                     @controllers.Users.addUser

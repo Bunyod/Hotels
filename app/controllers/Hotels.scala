@@ -31,7 +31,7 @@ class Hotels extends Controller with HotelAuth {
 
   def addHotel = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>
     val user = loggedIn
-    Logger.info(s"AUTH_FOR_HOTEL_USER:$user")
+    Logger.info(s"LOGGGGEDDD_USER:$user")
 
     DBAction(parse.json) { implicit req =>
       req.request.body.validate[Hotel].map { hotel =>

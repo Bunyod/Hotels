@@ -42,11 +42,13 @@ trait HotelAuthConfig extends AuthConfig {
   import play.api.Play.current
 
   private val users = TableQuery[UsersTable]
+  private val admins = TableQuery[HotelAdminsTable]
   private val hotels = TableQuery[HotelsTable]
 
-  def getOwnHotel(hotelId: Int): String = DB.withSession { implicit session =>
+  def getOwnHotel(userId: Int): String = DB.withSession { implicit session =>
     val filteredHotel = (for {
-      hotel <- hotels if hotel.id === hotelId
+      admin <- admins if admin.id === userId
+      hotel <- hotels if hotel.id === admin.hotelId
     } yield (hotel.name)).firstOption
 
     filteredHotel.head
@@ -61,7 +63,7 @@ trait HotelAuthConfig extends AuthConfig {
   private def hasRole(requiredRole: UserRole, user: User) = {
     user.role match {
       case UserRoleEnum.ADMINISTATOR => true
-      case UserRoleEnum.ADMIN if requiredRole != UserRoleEnum.ADMIN => true
+      case UserRoleEnum.ADMIN if requiredRole != UserRoleEnum.ADMINISTATOR => true
       case UserRoleEnum.USER if requiredRole == UserRoleEnum.USER => true
       case _ => false
     }

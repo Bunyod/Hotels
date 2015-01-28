@@ -33,6 +33,21 @@ trait Date2SqlDate {
   )
 }
 
+case class PermValue (View: Boolean, Modify: Boolean)
+
+case class Permission (
+                        MessageContent: PermValue,
+                        Campaign: PermValue,
+                        Report: PermValue,
+                        Configuration: PermValue,
+                        Sweepstake: PermValue,
+                        Multicast: PermValue,
+                        MulticastByDate: PermValue,
+                        ContentType: PermValue,
+                        ShortCode: PermValue,
+                        User: PermValue) {
+}
+
 case class Hotel(id: Option[Int],
                  name: String,
                  phone: String,
