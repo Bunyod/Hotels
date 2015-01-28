@@ -191,7 +191,8 @@ class ReviewsTable(tag: Tag) extends Table[Review](tag, "REVIEW") with Date2SqlD
 }
 
 case class RoomType(id: Option[Int],
-                  name: String) {
+                  name: String,
+                  description: String) {
 }
 
 class RoomTypesTable(tag: Tag) extends Table[RoomType](tag, "ROOM_TYPE") {
@@ -200,7 +201,9 @@ class RoomTypesTable(tag: Tag) extends Table[RoomType](tag, "ROOM_TYPE") {
 
   def name = column[String]("NAME", O.NotNull)
 
-  def * = (id.?, name) <>(RoomType.tupled, RoomType.unapply _)
+  def description = column[String]("DESCRIPTION", O.Default(""))
+
+  def * = (id.?, name, description) <>(RoomType.tupled, RoomType.unapply _)
 
 }
 
@@ -280,7 +283,7 @@ case class Reservation(id: Option[Int],
                        userId: Int,
                        checkInDate: Date = new Date(),
                        checkOutDate: Date = new Date(),
-                       roomType: Int,
+                       roomTypeId: Int,
                        adults: Int,
                        children: Int) {
 }
@@ -300,16 +303,16 @@ class ReservationsTable(tag: Tag) extends Table[Reservation](tag, "RESERVATION")
 
   def checkOutDate = column[Date]("CHECK_OUT_DATE")
 
-  def roomType = column[Int]("ROOM_TYPE", O.NotNull)
+  def roomTypeId = column[Int]("ROOM_TYPE_ID", O.NotNull)
 
   def adults = column[Int]("ADULTS", O.NotNull)
 
   def children = column[Int]("CHILDREN", O.NotNull)
 
-  def * = (id.?, hotelId, userId, checkInDate, checkOutDate, roomType, adults, children) <>(Reservation.tupled, Reservation.unapply _)
+  def * = (id.?, hotelId, userId, checkInDate, checkOutDate, roomTypeId, adults, children) <>(Reservation.tupled, Reservation.unapply _)
 
   def hotel = foreignKey("RESERVATION_FK_HOTEL_ID", hotelId, hotels)(_.id)
-  def roomTypeId = foreignKey("RESERVATION_FK_ROOM_TYPE", roomType, roomTypes)(_.id)
+  def roomType = foreignKey("RESERVATION_FK_ROOM_TYPE", roomTypeId, roomTypes)(_.id)
 
 
 }
@@ -381,7 +384,8 @@ object JsonFormats {
   implicit val roomTypeWrites = Json.writes[RoomType]
   implicit val roomTypeReads: Reads[RoomType] = (
     ( JsPath \ "id").readNullable[Int] and
-      (JsPath \ "name").read[String]
+      (JsPath \ "name").read[String] and
+      (JsPath \ "description").read[String]
     )(RoomType)
 
   implicit val roomWrites = Json.writes[Room]
@@ -415,7 +419,7 @@ object JsonFormats {
       (JsPath \ "userId").read[Int] and
       (JsPath \ "checkInDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
       (JsPath \ "checkOutDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
-      (JsPath \ "roomType").read[Int] and
+      (JsPath \ "roomTypeId").read[Int] and
       (JsPath \ "adults").read[Int] and
       (JsPath \ "children").read[Int]
     )(Reservation)

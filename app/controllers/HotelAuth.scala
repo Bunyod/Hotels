@@ -120,7 +120,7 @@ trait HotelAuthConfig extends AuthConfig {
    * Where to redirect the user after a successful login.
    */
   def loginSucceeded(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] =
-    Future successful Ok
+    Future successful Ok("Successfully logged in")
 
   /**
    * Where to redirect the user after logging out
@@ -132,7 +132,7 @@ trait HotelAuthConfig extends AuthConfig {
    * If the user is not logged in and tries to access a protected resource then redirct them as follows:
    */
   def authenticationFailed(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] =
-    Future successful BadRequest("Incorrect login or password")
+    Future successful BadRequest("Retry: Incorrect login or password")
 
   /**
    * If authorization failed (usually incorrect password) redirect the user as follows:
