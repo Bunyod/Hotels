@@ -1,1 +1,1 @@
-web target/universal/stage/bin/mydissertation -Dhttp.port=$PORT -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=postgres://uuvqoguyibgejn:Hdg2c2oY79EMmbmcm-ACqWsJQQ@ec2-50-16-190-77.compute-1.amazonaws.com:5432/dmrbl9r0p1vvi
+web target/universal/stage/bin/mydissertation -Dhttp.port=$PORT -DapplyEvolutions.default=true -DapplyDownEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=postgres://uuvqoguyibgejn:Hdg2c2oY79EMmbmcm-ACqWsJQQ@ec2-50-16-190-77.compute-1.amazonaws.com:5432/dmrbl9r0p1vvi
