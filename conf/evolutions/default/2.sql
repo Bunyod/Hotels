@@ -19,3 +19,5 @@ INSERT into "ROOM_TYPE"("NAME", "DESCRIPTION") values ('King', 'A room with a ki
 INSERT into "ROOM_TYPE"("NAME", "DESCRIPTION") values ('Twin', 'A room with two twin beds. May be occupied by one or more people.');
 INSERT into "ROOM_TYPE"("NAME", "DESCRIPTION") values ('Double-double', 'A Room with two double ( or perhaps queen) beds. May be occupied by one or more person.');
 
+INSERT into "CITY"("NAME", "LATITUDE", "LONGITUDE", "REGION_ID") values ('Urgench', 80.000, 180.000, 1);
+INSERT into "PRICE_INTERVAL"("NAME", "BOTTOM", "TOP") values (1, 5.0, 100.0);

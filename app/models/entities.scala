@@ -149,7 +149,7 @@ case class PriceInterval(id: Option[Int],
                          bottom: Double,
                          top: Double)
 
-class PriceIntervalsTable(tag: Tag) extends Table[PriceInterval](tag, "PRICE") {
+class PriceIntervalsTable(tag: Tag) extends Table[PriceInterval](tag, "PRICE_INTERVAL") {
 
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 
@@ -355,7 +355,8 @@ class ReservationsTable(tag: Tag) extends Table[Reservation](tag, "RESERVATION")
 case class City(id: Option[Int],
                 name: String,
                 latitude: Option[Double],
-                longitude: Option[Double])
+                longitude: Option[Double],
+                regionId: Int)
 
 class CitiesTable(tag: Tag) extends Table[City](tag, "CITY") {
 
@@ -367,7 +368,9 @@ class CitiesTable(tag: Tag) extends Table[City](tag, "CITY") {
 
   def longitude = column[Double]("LONGITUDE", O.Default(0.0))
 
-  def * = (id.?, name, latitude.?, longitude.?) <> (City.tupled, City.unapply _)
+  def regionId = column[Int]("REGION_ID", O.NotNull)
+
+  def * = (id.?, name, latitude.?, longitude.?, regionId) <> (City.tupled, City.unapply _)
 
 }
 
@@ -377,6 +380,7 @@ object JsonFormats {
 
   implicit val userRoleFormat = EnumUtils.enumFormat(UserRoleEnum)
   implicit val userStateFormat = EnumUtils.enumFormat(UserStateEnum)
+  implicit val priceIntervalFormat = EnumUtils.enumFormat(PriceEnum)
 
   implicit val credentialFormat = Json.format[Credential]
 
@@ -386,7 +390,6 @@ object JsonFormats {
   implicit val permissionWrites = Json.writes[Permission]
 
   implicit val userFormat = Json.format[Account]
-  implicit val searchResultFormat = Json.format[SearchResult]
 
   implicit val hotelWrites = Json.writes[Hotel]
   implicit val hotelReads: Reads[Hotel] = (
@@ -408,7 +411,7 @@ object JsonFormats {
       (JsPath \ "address").read[String] and
       (JsPath \ "latitude").read[Double] and
       (JsPath \ "longitude").read[Double] and
-      (JsPath \ "price").read[Int]
+      (JsPath \ "priceId").read[Int]
     )(Hotel)
 
   implicit val priceIntervalWrites = Json.writes[PriceInterval]
@@ -490,7 +493,8 @@ object JsonFormats {
       (JsPath \ "id").readNullable[Int] and
       (JsPath \ "name").read[String] and
       (JsPath \ "latitude").readNullable[Double]and
-      (JsPath \ "longitude").readNullable[Double]
+      (JsPath \ "longitude").readNullable[Double] and
+      (JsPath \ "regionId").read[Int]
     )(City)
 
   implicit val searchParamsWrites = Json.writes[SearchParams]
@@ -507,5 +511,7 @@ object JsonFormats {
         (JsPath \ "starRating").readNullable[Int] and
         (JsPath \ "reviewScore").readNullable[Int]
     )(SearchParams)
+
+  implicit val searchResultFormat = Json.format[SearchResult]
 
 }
