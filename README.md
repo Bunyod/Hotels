@@ -21,8 +21,8 @@ http://uzhotels.herokuapp.com/hotels/list
 
 http://uzhotels.herokuapp.com/hotels/add
 
-```{<br/>
-	"name": "MyHotel",<br/>
+{
+	"name": "MyHotel",
 	"phone": "+1234567890",<br/>
 	"fax":"9876543210",<br/>
 	"email": "myhotel@gmail.com",<br/>
@@ -39,4 +39,4 @@ http://uzhotels.herokuapp.com/hotels/add
 	"address": "my street way",<br/>
 	"latitude": 123.001,<br/>
 	"longitude": 321.002<br/>
-}<br/>```
+}<br/>
