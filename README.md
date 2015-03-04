@@ -1,4 +1,4 @@
-```# MyDissertation
+# MyDissertation
 
 Getting users
 
@@ -20,7 +20,7 @@ http://uzhotels.herokuapp.com/hotels/list
 
 
 http://uzhotels.herokuapp.com/hotels/add
-
+```
 {<br/>
 	"name": "MyHotel",<br/>
 	"phone": "+1234567890",<br/>
