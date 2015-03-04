@@ -22,11 +22,11 @@ http://uzhotels.herokuapp.com/hotels/list
 http://uzhotels.herokuapp.com/hotels/add
 
 {
-	"name": "MyHotel",
-	"phone": "+1234567890",<br/>
-	"fax":"9876543210",<br/>
-	"email": "myhotel@gmail.com",<br/>
-	"webSite": "myhotel.uz",<br/>
+-	"name": "MyHotel",
+-	"phone": "+1234567890",<br/>
+-	"fax":"9876543210",<br/>
+-	"email": "myhotel@gmail.com",<br/>
+-	"webSite": "myhotel.uz",<br/>
 	"rate": "4",<br/>
 	"image": "aaa.uz/hotel.png",<br/>
 	"star": 5,<br/>
