@@ -1,35 +1,32 @@
-<div class="form-box" id="login-box" ng-controller="LoginCtrl">
-    <div class="header">Sign In</div>
-    <form id="LoginForm" name="LoginForm" role="form" method="post" ng-submit="signIn()">
+<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
 
-        <div class="body bg-gray">
-            <div class="form-group">
-                <input type="text" name="login" id="login" class="form-control" placeholder="User ID"
-                ng-model="credential.login" required="" />
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" id="password" class="form-control" placeholder="Password"
-                ng-model="credential.password" required="" />
-            </div>
-            <div class="form-group">
-                <input type="checkbox" name="remember_me"/> Remember me
+<div class="container">
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please sign in</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" action="@routes.Application.signIn()" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="login" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                                </label>
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="footer">
-            <button type="submit" class="btn bg-olive btn-block">Sign me in</button>
-
-            <p><a href="#">I forgot my password</a></p>
-
-            <a href="#" class="text-center">Register a new membership</a>
-        </div>
-    </form>
-
-    <div class="margin text-center">
-        <span>Sign in using social networks</span>
-        <br/>
-        <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
-        <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
-        <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
-
     </div>
 </div>
