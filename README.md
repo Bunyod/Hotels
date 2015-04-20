@@ -20,7 +20,6 @@ http://uzhotels.herokuapp.com/hotels/list
 
 
 http://uzhotels.herokuapp.com/hotels/add
-
 {
 	"name": "MyHotel",
 	"phone": "+1234567890",

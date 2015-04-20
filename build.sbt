@@ -24,5 +24,4 @@ libraryDependencies ++= Seq(
   "jp.t2v" %% "stackable-controller" % "0.4.0" withSources() withJavadoc()
 )
 
-
 //unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

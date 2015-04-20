@@ -53,21 +53,23 @@ case class Permission (Hotel: PermHotel,
                        User: PermUser) {
 }
 
-case class SearchParams(location: Option[Int],
+case class SearchParams(location: Option[Int], // TODO: location or cityId??? If we need to pass location so it would be double?
+                        cityId: Option[Int],
                         checkInDate: Date = new Date(),
                         checkOutDate: Date = new Date(),
-                        rooms: Option[Int],
+                        roomType: Option[Int], //TODO: what does rooms mean??? May be roomType
                         adults: Option[Int],
                         children: Option[Int],
-                        bottom:Option[Double],
+                        bottom:Option[Double], //TODO: how to need pass this bottom and top params from client???
                         top: Option[Double],
                         hotelTypeId: Option[Int],
-                        starRating: Option[Int],
+                        starRating: Option[Int], //TODO: need to understand
                         reviewScore: Option[Int]
                          )
 
 case class SearchResult(hotel: Hotel,
-                        cityName: String)
+                        cityName: String,
+                        hotelType: String)
 
 case class Hotel(id: Option[Int],
                  name: String,
@@ -500,9 +502,10 @@ object JsonFormats {
   implicit val searchParamsWrites = Json.writes[SearchParams]
   implicit val searchParamsReads: Reads[SearchParams] = (
       (JsPath \ "localtion").readNullable[Int] and
+      (JsPath \ "cityId").readNullable[Int] and
         (JsPath \ "checkInDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
         (JsPath \ "checkOutDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
-        (JsPath \ "rooms").readNullable[Int] and
+        (JsPath \ "roomType").readNullable[Int] and
         (JsPath \ "adults").readNullable[Int] and
         (JsPath \ "children").readNullable[Int] and
         (JsPath \ "bottom").readNullable[Double] and

@@ -33,10 +33,25 @@ class Search extends Controller with HotelAuth {
 
   def findHotelsByParams = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[SearchParams].map { searchParams =>
+      Logger.info(s"SearchParams:= $searchParams")
+
+      val searchJoin = hotels.leftJoin(cities).leftJoin(hotelTypes).on {
+        case ((hotel, city), hotelType) =>
+          hotel.cityId === city.id &&
+          hotel.hotelTypeId === hotelType.id
+        }
+
       val searchResult = (for {
-        (h, c) <- hotels leftJoin cities on (_.cityId === _.id) if h.cityId == searchParams.location
-      }yield (h, c.name)).list
-        .map { case (hotels, cityName) => SearchResult(hotels, cityName)}
+        ((hotel, city), hotelType) <- searchJoin
+//      ((hotel, city), hotelType) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id)
+//       in above shown comment in expression is equal to searchJoin
+           if (hotel.cityId === searchParams.cityId &&
+               hotel.hotelTypeId === searchParams.hotelTypeId &&
+               hotel.star === searchParams.starRating)
+      } yield (hotel, city.name, hotelType.name)).list
+        .map { case (hotels, cityName, hotelTypeName) =>
+                SearchResult(hotels, cityName, hotelTypeName)
+              }
 
       Ok(Json.obj(
         "rows" -> searchResult

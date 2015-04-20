@@ -29,6 +29,8 @@ POST        /hotels/roomTypes/add          @controllers.Hotels.addRoomType
 GET         /reservations/list             @controllers.Reservations.reservationsList(userId: Int)
 POST        /reservations/add              @controllers.Reservations.addReservation
 
+POST        /search/params                 @controllers.Search.findHotelsByParams
+GET         /search/all                    @controllers.Search.allHotels
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.at(path="/public", file)
