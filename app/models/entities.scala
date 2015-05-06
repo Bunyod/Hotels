@@ -69,7 +69,14 @@ case class SearchParams(location: Option[Int], // TODO: location or cityId??? If
 
 case class SearchResult(hotel: Hotel,
                         cityName: String,
-                        hotelType: String)
+                        hotelType: String,
+                        priceInterval: String)
+
+case class HotelsDisplay(hotel: Hotel,
+                        cityName: String,
+                        hotelType: String,
+                        price: String,
+                        priceInterval: String)
 
 case class Hotel(id: Option[Int],
                  name: String,
@@ -89,7 +96,8 @@ case class Hotel(id: Option[Int],
                  address: String,
                  latitude: Double,
                  longitude: Double,
-                 priceId: Int
+                 priceId: Int,
+                 premium: Boolean
                   )
 
 class HotelsTable(tag: Tag) extends Table[Hotel](tag, "HOTEL") {
@@ -136,9 +144,11 @@ class HotelsTable(tag: Tag) extends Table[Hotel](tag, "HOTEL") {
 
   def priceId = column[Int]("PRICE_ID", O.Default(0))
 
+  def premium = column[Boolean]("PREMIUM", O.Default(true))
+
 
   def * = (id.?, name, phone, fax, email, webSite, rate, image, star, distCenter, hotelTypeId, entrance, exit, regionId,
-           cityId, address, latitude, longitude, priceId) <> (Hotel.tupled, Hotel.unapply _)
+           cityId, address, latitude, longitude, priceId, premium) <> (Hotel.tupled, Hotel.unapply _)
 
   def hotelType = foreignKey("HOTEL_FK_HOTEL_TYPE_ID", hotelTypeId, hotelTypes)(_.id)
   def price = foreignKey("HOTEL_FK_PRICE_INTERVAL_ID", priceId, prices)(_.id)
@@ -298,7 +308,6 @@ class RoomsTable(tag: Tag) extends Table[Room](tag, "ROOM") {
   def * = (id.?, hotelId, roomType, count, price, discount, wifi, breakfast, parking, fitness, pool, transport, barRest,
     bathroom) <> (Room.tupled, Room.unapply _)
 
-
   def hotel = foreignKey("ROOM_FK_HOTEL_ID", hotelId, hotels)(_.id)
   def roomTypeId = foreignKey("ROOM_FK_ROOM_TYPE", roomType, roomTypes)(_.id)
 
@@ -413,7 +422,8 @@ object JsonFormats {
       (JsPath \ "address").read[String] and
       (JsPath \ "latitude").read[Double] and
       (JsPath \ "longitude").read[Double] and
-      (JsPath \ "priceId").read[Int]
+      (JsPath \ "priceId").read[Int] and
+      (JsPath \ "premium").read[Boolean]
     )(Hotel)
 
   implicit val priceIntervalWrites = Json.writes[PriceInterval]
@@ -503,8 +513,8 @@ object JsonFormats {
   implicit val searchParamsReads: Reads[SearchParams] = (
       (JsPath \ "localtion").readNullable[Int] and
       (JsPath \ "cityId").readNullable[Int] and
-        (JsPath \ "checkInDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
-        (JsPath \ "checkOutDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy HH:mm"), Writes.dateWrites("mm/dd/yyyy HH:mm"))) and
+        (JsPath \ "checkInDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy"), Writes.dateWrites("mm/dd/yyyy"))) and
+        (JsPath \ "checkOutDate").read[Date](Format(Reads.dateReads("MM/dd/yyyy"), Writes.dateWrites("mm/dd/yyyy"))) and
         (JsPath \ "roomType").readNullable[Int] and
         (JsPath \ "adults").readNullable[Int] and
         (JsPath \ "children").readNullable[Int] and
@@ -516,5 +526,6 @@ object JsonFormats {
     )(SearchParams)
 
   implicit val searchResultFormat = Json.format[SearchResult]
+  implicit val hotelsDisplayFormat = Json.format[HotelsDisplay]
 
 }

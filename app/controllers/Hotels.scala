@@ -5,6 +5,7 @@ import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick._
 import play.api.Play.current
 import models._
+import play.api.libs.json.Json
 import play.api.libs.json.Json._
 import play.api.mvc._
 import models.JsonFormats._
@@ -23,10 +24,41 @@ class Hotels extends Controller with HotelAuth {
   val rooms = TableQuery[RoomsTable]
   val roomTypes = TableQuery[RoomTypesTable]
   val hotelTypes = TableQuery[HotelTypesTable]
+  val cities = TableQuery[CitiesTable]
+  val prices = TableQuery[PriceIntervalsTable]
 
 
   def allHotels = DBAction { implicit rs =>
-    Ok(toJson(hotels.list))
+
+    val searchResult = (for {
+      (((hotel, city), hotelType), price) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id) leftJoin prices on (_._1._1.priceId === _.id)
+    } yield (hotel, city.name, hotelType.name, price.name, price.bottom, price.top)).list
+      .map {
+      case (hotel, cityName, hotelTypeName, priceName, bottom, top) =>
+        HotelsDisplay(hotel, cityName, hotelTypeName, priceName.toString, bottom + " - " + top)
+    }
+
+    Logger.info(s"HOTELSS = $searchResult")
+
+    Ok(toJson(searchResult))
+
+  }
+
+  def premiumHotels = DBAction { implicit rs =>
+
+    val searchResult = (for {
+      (((hotel, city), hotelType), price) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id) leftJoin prices on (_._1._1.priceId === _.id)
+      if(hotel.premium)
+    } yield (hotel, city.name, hotelType.name, price.name, price.bottom, price.top)).list
+      .map {
+      case (hotel, cityName, hotelTypeName, priceName, bottom, top) =>
+        HotelsDisplay(hotel, cityName, hotelTypeName, priceName.toString, bottom + " - " + top)
+    }
+
+    Logger.info(s"HOTELSS = $searchResult")
+
+    Ok(toJson(searchResult))
+
   }
 
   def addHotel = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>

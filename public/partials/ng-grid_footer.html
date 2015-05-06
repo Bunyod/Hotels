@@ -1,0 +1,7 @@
+<div ng-show="showFooter" class="ngFooterPanel text-center"
+     ng-class="{'ui-widget-content': jqueryUITheme, 'ui-corner-bottom': jqueryUITheme}"
+     ng-style="footerStyle()">
+    <pagination total-items="totalServerItems"
+                ng-model="pagingOptions.currentPage"
+                items-per-page="3"></pagination>
+</div>

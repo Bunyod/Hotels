@@ -8,10 +8,12 @@ GET         /                              controllers.Application.index
 POST        /users/signIn                  controllers.Application.signIn
 POST        /users/signOut                 controllers.Application.signOut
 
-GET         /users/list                    @controllers.Users.index
+GET         /users                         @controllers.Users.findUsers
+GET         /users/authors                 @controllers.Users.authors
 POST        /users/add                     @controllers.Users.addUser
 
 GET         /hotels/list                   @controllers.Hotels.allHotels
+GET         /hotels/premiums               @controllers.Hotels.premiumHotels
 POST        /hotels/add                    @controllers.Hotels.addHotel
 
 GET         /hotelTypes/list               @controllers.Hotels.hotelTypesList
@@ -22,6 +24,7 @@ POST        /hotel/:id/reviews/add         @controllers.Hotels.addReview(id: Int
 
 GET         /hotel/:id/rooms/list          @controllers.Hotels.hotelRooms(id: Int)
 POST        /hotel/:id/rooms/add           @controllers.Hotels.addRoom(id: Int)
+POST        /hotel/:id/details             @controllers.Hotels.addRoom(id: Int)
 
 GET         /hotels/roomTypes/list         @controllers.Hotels.roomTypeList
 POST        /hotels/roomTypes/add          @controllers.Hotels.addRoomType
@@ -29,10 +32,15 @@ POST        /hotels/roomTypes/add          @controllers.Hotels.addRoomType
 GET         /reservations/list             @controllers.Reservations.reservationsList(userId: Int)
 POST        /reservations/add              @controllers.Reservations.addReservation
 
-POST        /search/params                 @controllers.Search.findHotelsByParams
+#GET         /search/params                 @controllers.Search.allHotels
+POST        /search/params                 @controllers.Search.findHotelsByParams(cityId: Int)
 GET         /search/all                    @controllers.Search.allHotels
+GET         /search/cities                 @controllers.Search.getCities
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.at(path="/public", file)
+
+# Use `Assets.versioned` to enable Play 2.3's Asset Fingerprinting
+GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
 
     

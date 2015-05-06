@@ -1,3 +1,59 @@
-@(message: String)
+@(page: String)
+<!doctype html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <title>UzHotels</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="Uzbekistan airways, travel, trip, Urgench, Tashkent, Samarkand, Bukhara, Xorazm, Khorezm, Hotel, Apartment, Khiva, Xiva, Hostel, B&B" />
 
-@main("UzHotels")
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+        <link rel="stylesheet" href='@routes.Assets.at("lib/ng-grid/ng-grid.css")'>
+        <link rel="stylesheet" href="@routes.Assets.at("lib/bootstrap/css/bootstrap.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")">
+        <link rel="stylesheet" href='@routes.Assets.at("lib/ionicons/css/ionicons.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css")'>
+        <link href='http://fonts.googleapis.com/css?family=Grand+Hotel:400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet:100,300,400,500,600,700,800,900' type='text/css'>
+        <link rel="stylesheet" href='@routes.Assets.at("lib/font-awesome/css/font-awesome.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("stylesheets/style.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("stylesheets/left-sidebar.css")'>
+
+    </head>
+    <body>
+        <script src='@routes.Assets.at("lib/jquery/jquery.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("lib/angularjs/angular.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angular-animate/angular-animate.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angularjs/angular-route.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("lib/angular-ui-router/release/angular-ui-router.min.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("lib/angularjs/angular-resource.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("lib/angular-ui-sortable/sortable.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("lib/angular-ui-bootstrap/ui-bootstrap-tpls.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angular-growl/angular-growl.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/ng-grid/ng-grid.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angular-ui-bootstrap/ui-bootstrap-tpls.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angular-strap/angular-strap.min.js")'type="text/javascript"></script>
+        <script src='@routes.Assets.at("lib/angular-strap/angular-strap.tpl.min.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("js/responsiveslides.min.js")'></script>
+        <script src='@routes.Assets.at("js/easyResponsiveTabs.js")'></script>
+        <!-- Coffee script compiled resources-->
+        <script src='@routes.Assets.at("javascripts/app.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/common/Config.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/common/GlobalVariables.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/common/Routes.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/directives/AppVersion.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/directives/Rest.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/users/UserCtrl.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/users/HotelsCtrl.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/users/SearchCtrl.js")' type="text/javascript"></script>
+        <script src='@routes.Assets.at("javascripts/users/SearchResultCtrl.js")' type="text/javascript"></script>
+        @main("company"){
+            @header("home")
+        }
+    </body>
+</html>

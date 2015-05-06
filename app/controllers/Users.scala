@@ -22,8 +22,13 @@ class Users extends Controller with HotelAuth {
 
   val users = TableQuery[UsersTable]
 
-  def index() = DBAction { implicit rs =>
+  def findUsers = DBAction { implicit rs =>
+    Logger.info(s"Hiiiii im here =${users.list}")
+    Ok(toJson(users.list))
+  }
 
+  def authors = DBAction { implicit rs =>
+    Logger.info(s"Hiiiii im here")
     Ok(toJson(users.list))
   }
 

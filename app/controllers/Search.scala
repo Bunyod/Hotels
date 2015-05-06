@@ -25,33 +25,38 @@ class Search extends Controller with HotelAuth {
   val roomTypes = TableQuery[RoomTypesTable]
   val hotelTypes = TableQuery[HotelTypesTable]
   val cities = TableQuery[CitiesTable]
-
+  val prices = TableQuery[PriceIntervalsTable]
 
   def allHotels = DBAction { implicit rs =>
     Ok(toJson(hotels.list))
   }
 
-  def findHotelsByParams = DBAction(parse.json) { implicit rs =>
+  def getCities = DBAction { implicit rs =>
+    Ok(toJson(cities.list))
+  }
+
+  def findHotelsByParams(cityId: Int) = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[SearchParams].map { searchParams =>
       Logger.info(s"SearchParams:= $searchParams")
 
-      val searchJoin = hotels.leftJoin(cities).leftJoin(hotelTypes).on {
-        case ((hotel, city), hotelType) =>
-          hotel.cityId === city.id &&
-          hotel.hotelTypeId === hotelType.id
-        }
+//      val searchJoin = hotels.leftJoin(cities).leftJoin(hotelTypes).leftJoin(prices).on {
+//        case (((hotel, city), hotelType), price) =>
+//          hotel.cityId === city.id &&
+//          hotel.hotelTypeId === hotelType.id &&
+//          hotel.priceId === price.id
+//      }
 
       val searchResult = (for {
-        ((hotel, city), hotelType) <- searchJoin
-//      ((hotel, city), hotelType) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id)
+//        (((hotel, city), hotelType), price) <- searchJoin
+        (((hotel, city), hotelType), price) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id) leftJoin prices on (_._1._1.priceId === _.id)
 //       in above shown comment in expression is equal to searchJoin
            if (hotel.cityId === searchParams.cityId &&
                hotel.hotelTypeId === searchParams.hotelTypeId &&
                hotel.star === searchParams.starRating)
-      } yield (hotel, city.name, hotelType.name)).list
-        .map { case (hotels, cityName, hotelTypeName) =>
-                SearchResult(hotels, cityName, hotelTypeName)
-              }
+      } yield (hotel, city.name, hotelType.name, price.bottom, price.top)).list
+        .map { case (hotels, cityName, hotelTypeName, bottom, top) =>
+                 SearchResult(hotels, cityName, hotelTypeName, bottom + " - " + top)
+             }
 
       Ok(Json.obj(
         "rows" -> searchResult
