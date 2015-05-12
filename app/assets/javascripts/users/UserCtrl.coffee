@@ -1,4 +1,5 @@
-class UserCtrl
+angular.module('myApp.controllers')
+.controller 'UserCtrl', class
     constructor: ($scope, @$log, $route, Users) ->
         @$log.info("Urraaaa1")
         glob = $scope.Glob
@@ -14,6 +15,4 @@ class UserCtrl
             ).$promise
 
         $scope.getUsers()
-
-controllersModule.controller('UserCtrl', UserCtrl)
 

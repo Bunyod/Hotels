@@ -1,36 +1,37 @@
-class HotelsCtrl
-    constructor: ($scope, @$log, $route, Hotels) ->
+angular.module('myApp.controllers')
+.controller 'HotelsCtrl', class
+    constructor: ($log, $scope, $state, Hotels) ->
+        vm = @
         glob = $scope.Glob
-        $scope.hotels = {}
-        $scope.premiums = {}
+        vm.hotels = {}
+        vm.premiums = {}
 
-        $scope.getHotels = () =>
+        vm.getHotels = () =>
             Hotels.list((data) =>
-                @$log.info(data)
+                $log.info(data)
                 if data
-                  $scope.hotels = data
-                  @$log.info($scope.hotels)
+                    vm.hotels = data
+                    $log.info(vm.hotels)
             ).$promise
 
-        $scope.getPremiumHotels = () =>
+        vm.getPremiumHotels = () =>
             Hotels.premiums((data) =>
-                @$log.info(data)
+                $log.info(data)
                 if data
-                    $scope.premiums= data
-                    @$log.info($scope.premiums)
+                    vm.premiums= data
+                    $log.info($scope.premiums)
             ).$promise
 
-        $scope.getCities = () =>
+        vm.getCities = () =>
             Hotels.cities((data) =>
-                @$log.info(data)
+                $log.info(data)
                 if data
                     glob.Cities = data
-                    @$log.info(glob.Cities)
+                    $log.info(glob.Cities)
             ).$promise
 
-        $scope.getCities()
-        $scope.getHotels()
-        $scope.getPremiumHotels()
-
-controllersModule.controller('HotelsCtrl', HotelsCtrl)
+        vm.getCities()
+        vm.getHotels()
+        vm.getPremiumHotels()
+        vm
 

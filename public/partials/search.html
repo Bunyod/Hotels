@@ -1,4 +1,4 @@
-<div class="details" ng-controller="SearchCtrl">
+<div class="details" ng-controller="SearchCtrl as vm">
     <div class="container">
         <form ng-submit="sendSearchParams()">
             <div class="col-md-10 dropdown-buttons">
@@ -18,23 +18,22 @@
                 <div class="col-md-4 dropdown-button">
                     <div class="form-group section_room">
                         <input type="text" class="form-control" data-date-format="MM/dd/yyyy" date-type="string" data-autoclose="1"
-                               ng-model="fromDate"  data-max-date="{{untilDate}}" placeholder="From" bs-datepicker>
+                               ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="From" bs-datepicker>
                     </div>
                 </div>
                 <div class="col-md-4 dropdown-button">
                     <div class="form-group section_room">
                         <input type="text" class="form-control" data-date-format="MM/dd/yyyy" data-autoclose="1" date-type="string"
-                               ng-model="untilDate"  data-min-date="{{fromDate}}" placeholder="Until" bs-datepicker>
+                               ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="Until" bs-datepicker>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-2 submit_button">
                 <form>
                     <input type="submit" value="Search">
                 </form>
             </div>
-            <div class="clearfix"> </div>
+            <div class="clearfix"></div>
         </form>
     </div>
 </div>

@@ -34,8 +34,8 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % "1.10.17" % "test",
   "org.webjars.bower" % "roboto-fontface" % "0.3.0",
   "org.webjars.bower" % "angular-animate" % "1.3.15",
-  "org.webjars" % "angular-strap" % "2.1.2",
-  "org.webjars.bower" % "angular-ui-router" % "0.2.13"
+  "org.webjars" % "angular-strap" % "2.2.1",
+  "org.webjars" % "angular-ui-router" % "0.2.0"
 )
 
 MochaKeys.requires += "./Setup"

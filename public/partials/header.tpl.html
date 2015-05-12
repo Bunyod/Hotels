@@ -1,4 +1,3 @@
-@(page: String)
 <script>
     $(function () {
         $("#slider").responsiveSlides({
@@ -20,16 +19,16 @@
         <span class="menu"></span>
         <div class="top-menu">
             <ul>
-                <li ng-class="getClass('{{Glob.Route.Hotels.List}}', '{{Glob.Route.Hotels.TopList}}')">
-                    <a ng-href="/#{{Glob.Route.Hotels.List}}" class="active scroll"><i class="fa fa-home"> </i>Home</a>
+                <li>
+                    <a ui-sref="root.home" class="active scroll"><i class="fa fa-home"> </i>Home</a>
                 </li>
-                <li ng-class="getClass('{{Glob.Route.Users.List}}', '{{Glob.Route.Users.Authors}}')">
-                    <a ng-href="/#{{Glob.Route.Users.List}}">
+                <li>
+                    <a ui-sref="root.authors">
                     <i class="fa fa-star"> </i> About</a>
                 </li>
-                <li><a href="services.html"><i class="fa fa-thumbs-up"> </i>Services</a></li>
-                <li><a href="gallery.html"><i class="fa fa-picture-o"> </i>Gallery</a></li>
-                <li><a href="contact.html"><i class="fa fa-envelope-o"> </i>Contact</a></li>
+                <li><a ui-sref="root.services"><i class="fa fa-thumbs-up"> </i>Services</a></li>
+                <li><a ui-sref="root.gallery"><i class="fa fa-picture-o"> </i>Gallery</a></li>
+                <li><a ui-sref="root.contact"><i class="fa fa-envelope-o"> </i>Contact</a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>

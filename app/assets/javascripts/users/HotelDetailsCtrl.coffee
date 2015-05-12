@@ -1,4 +1,5 @@
-class HotelsCtrl
+angular.module('myApp.controllers')
+.controller 'HotelsCtrl', class
     constructor: ($scope, @$log, $route, Hotels) ->
         glob = $scope.Glob
         $scope.hotels = {}
@@ -31,6 +32,3 @@ class HotelsCtrl
         $scope.getCities()
         $scope.getHotels()
         $scope.getPremiumHotels()
-
-controllersModule.controller('HotelsCtrl', HotelsCtrl)
-

@@ -1,5 +1,6 @@
-class SearchCtrl
-    constructor: ($scope, @$log, $route, Search, $location) ->
+angular.module('myApp.controllers')
+.controller 'SearchCtrl', class
+    constructor: ($log, $scope, $state, Search) ->
         glob = $scope.Glob
         $scope.searchParams = {}
         $scope.cityId = 1
@@ -16,35 +17,13 @@ class SearchCtrl
             $scope.selectedDate = null
 
         $scope.sendSearchParams = () =>
-            searchParams =
+            $scope.searchParams =
                 hotelTypeId: 1
                 starRating: 5
-            searchParams.cityId = parseInt($scope.cityId)
-            searchParams.checkInDate = $scope.fromDate
-            searchParams.checkOutDate= $scope.untilDate
-            @$log.info(searchParams)
-            $location.path("/hotels/search").search({
-                cityId: searchParams.cityId, checkInDate: searchParams.checkInDate,
-                checkOutDate: searchParams.checkOutDate
-            })
-            #
-#            searchPrms = Search.findHotel({cityId: $scope.cityId}, searchParams).$promise
-#            .then(
-#                (data) =>
-#                    glob.Hotels = data
-#                    @$log.info(glob.Hotels)
-##                    $location.path("/hotels/search").search({
-##                        hotelTypeId: searchParams.hotelTypeId, starRating: searchParams.starRating,
-##                        cityId: searchParams.cityId, checkInDate: searchParams.checkInDate,
-##                        checkOutDate: searchParams.checkOutDate
-##                    })
-##                    $location.path(glob.Route.Search.Result).replace().reload(true)
-##                    window.location = "/#" + $scope.Glob.Route.Search.Result
-##                    window.location.reload()
-#            ,
-#                (error) =>
-#                    @$log.error "Unable to find Hotels: #{error}"
-#            )
-
-controllersModule.controller('SearchCtrl', SearchCtrl)
+            $scope.searchParams.cityId = parseInt($scope.cityId)
+            $scope.searchParams.checkInDate = $scope.fromDate
+            $scope.searchParams.checkOutDate= $scope.untilDate
+            $log.info($scope.searchParams)
+            $state.go('root.search', $scope.searchParams)
+#        vm
 

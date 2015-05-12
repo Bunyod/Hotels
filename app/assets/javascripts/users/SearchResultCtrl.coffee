@@ -1,14 +1,15 @@
-class SearchResultCtrl
-    constructor: ($scope, @$log, $route, $location, $routeParams, Search) ->
+angular.module('myApp.controllers')
+.controller 'SearchResultCtrl', class
+    constructor: ($scope, @$log, $route, $location, $stateParams, Search) ->
         glob = $scope.Glob
         $scope.hotels = []
         $scope.cityId = 1
         searchParams =
             hotelTypeId: 1
             starRating: 5
-        searchParams.cityId = $routeParams.cityId
-        searchParams.checkInDate = $routeParams.checkInDate
-        searchParams.checkOutDate = $routeParams.checkOutDate
+        searchParams.cityId = $stateParams.cityId
+        searchParams.checkInDate = $stateParams.checkInDate
+        searchParams.checkOutDate = $stateParams.checkOutDate
 
         Search.findHotel({cityId: $scope.cityId}, searchParams).$promise
         .then(
@@ -18,6 +19,4 @@ class SearchResultCtrl
             (error) =>
                 @$log.error "Unable to find hotels: #{error}"
         )
-
-controllersModule.controller('SearchResultCtrl', SearchResultCtrl)
 
