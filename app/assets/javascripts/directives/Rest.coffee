@@ -18,10 +18,10 @@ angular.module('myApp')
 ])
 
 .factory('Search', ['$resource', ($resource) ->
-    $resource('/search/params/:id', cityId: '@cityId',
+    $resource('/search/params/:cityId', cityId: '@cityId',
       {
         'query': {method: 'GET', isArray: yes},
-        'findHotel': {method: 'POST', url: '/search/params'}
+        'findHotel': {method: 'GET', url: '/search/params'}
       }
     )
   ])

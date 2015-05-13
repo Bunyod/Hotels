@@ -54,7 +54,7 @@ angular.module('myApp')
       pageTitle: 'About'
   )
   $stateProvider.state("root.search",
-    url: "/search"
+    url: "/search?cityId&checkInDate&checkOutDate"
     views:
       'main@':
         controller: "SearchResultCtrl"
@@ -66,4 +66,18 @@ angular.module('myApp')
         controllerAs: 'vm'
     data:
       pageTitle: 'Search Hotels'
+  )
+  $stateProvider.state("root.details",
+    url: "/details?cityId"
+    views:
+      'main@':
+        controller: "HotelDetailsCtrl"
+        controllerAs: "vm"
+        templateUrl: "assets/partials/single.html"
+      'header@':
+        templateUrl: 'assets/partials/header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'vm'
+    data:
+      pageTitle: 'Hotel Details'
   )

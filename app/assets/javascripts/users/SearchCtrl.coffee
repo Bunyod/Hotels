@@ -1,6 +1,6 @@
 angular.module('myApp.controllers')
 .controller 'SearchCtrl', class
-    constructor: ($log, $scope, $state, Search) ->
+    constructor: ($log, $scope, $state) ->
         glob = $scope.Glob
         $scope.searchParams = {}
         $scope.cityId = 1

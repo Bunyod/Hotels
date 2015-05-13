@@ -18,12 +18,12 @@
         <h4 class="m_3">Most Popular</h4>
         <div class="grid_1">
             <div class="col-md-3 box_1" ng-repeat="topHotel in vm.premiums">
-                <a href="single.html"><img src="/assets/images/pic{{$counter+8}}.jpg" class="img-responsive" alt=""/></a>
+                <a ui-sref="root.details"><img src="/assets/images/pic{{$counter+8}}.jpg" class="img-responsive" alt=""/></a>
                 <div class="box_2">
                     <div class="special-wrap"><div class="hot_offer"><span class="m_11">Hot Offer</span></div><div class="forclosure"><span class="m_12">Special Offer</span></div></div>
                 </div>
                 <div class="box_3">
-                    <h3><a href="single.html">{{topHotel.hotel.name}}</a></h3>
+                    <h3><a ui-sref="root.details">{{topHotel.hotel.name}}</a></h3>
                     <div class="boxed_mini_details clearfix">
                             <span class="area first"><strong>Garage</strong><i class="fa fa-plane icon1"> </i>
                                 2</span>
@@ -69,11 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="blog_list2">
-                    <h3>Our Agents</h3>
-                </div>
-            </div>
+            <div ng-include src="'/assets/partials/right-sidebar.html'"></div>
             <div class="clearfix"> </div>
         </div>
     </div>

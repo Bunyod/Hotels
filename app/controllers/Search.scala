@@ -35,9 +35,7 @@ class Search extends Controller with HotelAuth {
     Ok(toJson(cities.list))
   }
 
-  def findHotelsByParams(cityId: Int) = DBAction(parse.json) { implicit rs =>
-    rs.request.body.validate[SearchParams].map { searchParams =>
-      Logger.info(s"SearchParams:= $searchParams")
+  def findHotelsByParams(cityId: Int, hotelTypeId: Int, starRating: Int) = DBAction { implicit rs =>
 
 //      val searchJoin = hotels.leftJoin(cities).leftJoin(hotelTypes).leftJoin(prices).on {
 //        case (((hotel, city), hotelType), price) =>
@@ -45,14 +43,14 @@ class Search extends Controller with HotelAuth {
 //          hotel.hotelTypeId === hotelType.id &&
 //          hotel.priceId === price.id
 //      }
-
+      Logger.info(s"SearchHotels: = $cityId")
       val searchResult = (for {
 //        (((hotel, city), hotelType), price) <- searchJoin
         (((hotel, city), hotelType), price) <- hotels leftJoin cities on (_.cityId === _.id) leftJoin hotelTypes on (_._1.hotelTypeId === _.id) leftJoin prices on (_._1._1.priceId === _.id)
 //       in above shown comment in expression is equal to searchJoin
-           if (hotel.cityId === searchParams.cityId &&
-               hotel.hotelTypeId === searchParams.hotelTypeId &&
-               hotel.star === searchParams.starRating)
+           if (hotel.cityId === cityId &&
+               hotel.hotelTypeId === hotelTypeId &&
+               hotel.star === starRating)
       } yield (hotel, city.name, hotelType.name, price.bottom, price.top)).list
         .map { case (hotels, cityName, hotelTypeName, bottom, top) =>
                  SearchResult(hotels, cityName, hotelTypeName, bottom + " - " + top)
@@ -61,9 +59,6 @@ class Search extends Controller with HotelAuth {
       Ok(Json.obj(
         "rows" -> searchResult
       ))
-    }.recoverTotal { errors =>
-      BadRequest(errors.toString)
-    }
   }
 
   def hotelReviews(id: Int) = DBAction { implicit rs =>
