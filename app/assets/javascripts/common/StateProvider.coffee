@@ -6,7 +6,6 @@ angular.module('myApp')
   $httpProvider.defaults.withCredentials = true
   delete $httpProvider.defaults.headers.common['X-Requested-With']
 
-  #    $httpProvider.interceptors.push 'trendster.errorInterceptor'
   $stateProvider.state("root",
     url: ""
     abstract: true

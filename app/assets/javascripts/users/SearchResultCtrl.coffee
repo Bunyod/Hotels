@@ -19,6 +19,9 @@ angular.module('myApp.controllers')
                     $log.info(vm.hotels)
             ).$promise
 
+        vm.showDetails = (hotelId) =>
+            $state.go('root.details', hotelId)
+
         vm.findHotels()
         vm
 

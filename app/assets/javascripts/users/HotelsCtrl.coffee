@@ -33,5 +33,7 @@ angular.module('myApp.controllers')
         vm.getCities()
         vm.getHotels()
         vm.getPremiumHotels()
+        vm.showDetails = (hotelId) ->
+            $state.go('root.details', hotelId)
         vm
 

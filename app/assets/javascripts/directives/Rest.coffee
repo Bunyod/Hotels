@@ -34,8 +34,8 @@ angular.module('myApp')
         'list': {method: 'GET', url: '/hotels/list', isArray: true},
         'premiums': {method: 'GET', url: '/hotels/premiums', isArray: true},
         'add': {method: 'POST', url: 'hotels/add'},
-        'cities': {method: 'GET', url:'/search/cities', isArray: yes},
-        'details': {method: 'GET', url:'/hotel/:id/details/', isArray: yes}
+        'cities': {method: 'GET', url:'/search/cities', isArray: true},
+        'details': {method: 'GET', url:'/hotel/:id/details/'}
       }
     )
   ])

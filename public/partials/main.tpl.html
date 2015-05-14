@@ -23,7 +23,7 @@
                     <div class="special-wrap"><div class="hot_offer"><span class="m_11">Hot Offer</span></div><div class="forclosure"><span class="m_12">Special Offer</span></div></div>
                 </div>
                 <div class="box_3">
-                    <h3><a ui-sref="root.details">{{topHotel.hotel.name}}</a></h3>
+                    <h3><a href ng-click="vm.showDetails(topHotel.id)">{{topHotel.hotel.name}}</a></h3>
                     <div class="boxed_mini_details clearfix">
                             <span class="area first"><strong>Garage</strong><i class="fa fa-plane icon1"> </i>
                                 2</span>
@@ -55,7 +55,7 @@
                                     <div class="client_box1">
                                         <img src="/assets/images/pic{{$index+1}}.jpg" class="img-responsive"/>
                                         <div class="box_type">$&nbsp;{{hotel.priceInterval}}</div>
-                                        <h3 class="m_1"><a ui-sref="root.single">{{hotel.hotel.name}}</a></h3>
+                                        <h3 class="m_1"><a href ng-click="vm.showDetails(hotel.id)">{{hotel.hotel.name}}</a></h3>
                                         <div class="boxed_mini_details clearfix">
                                             <span class="area first"><strong>Star</strong><i class="fa fa-star icon1"> {{hotel.hotel.star}}</i> </span>
                                             <span class="status"><strong>Rate</strong><i class="fa fa-asterisk icon1"> {{hotel.hotel.rate}} </i></span>
