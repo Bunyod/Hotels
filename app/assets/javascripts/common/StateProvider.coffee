@@ -32,10 +32,6 @@ angular.module('myApp')
         controller: "UserCtrl"
         controllerAs: "vm"
         templateUrl: "assets/partials/authors.html"
-      'header@':
-        templateUrl: "assets/partials/header.tpl.html"
-        controller: "HeaderCtrl"
-        controllerAs: "vm"
     data:
       pageTitle: "About")
   $stateProvider.state("root.services",
@@ -45,10 +41,6 @@ angular.module('myApp')
         controller: "ServicesCtrl"
         controllerAs: "vm"
         templateUrl: "assets/partials/services.html"
-      'header@':
-        templateUrl: 'assets/partials/header.tpl.html'
-        controller: 'HeaderCtrl'
-        controllerAs: 'vm'
     data:
       pageTitle: 'About'
   )
@@ -74,9 +66,23 @@ angular.module('myApp')
         controllerAs: "vm"
         templateUrl: "assets/partials/single.html"
       'header@':
-        templateUrl: 'assets/partials/header.tpl.html'
+        templateUrl: 'assets/partials/inside-header.tpl.html'
         controller: 'HeaderCtrl'
         controllerAs: 'vm'
     data:
       pageTitle: 'Hotel Details'
+  )
+  $stateProvider.state("root.hotels",
+    url: "/hotels/add"
+    views:
+      'main@':
+        controller: "HotelAdminCtrl"
+        controllerAs: "vm"
+        templateUrl: "assets/partials/add-hotel.html"
+      'header@':
+        templateUrl: 'assets/partials/admin-header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'vm'
+    data:
+      pageTitle: 'Adminstration Page'
   )

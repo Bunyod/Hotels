@@ -35,7 +35,8 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "roboto-fontface" % "0.3.0",
   "org.webjars.bower" % "angular-animate" % "1.3.15",
   "org.webjars" % "angular-strap" % "2.2.1",
-  "org.webjars" % "angular-ui-router" % "0.2.0"
+  "org.webjars" % "angular-ui-router" % "0.2.0",
+  "org.webjars.bower" % "blueimp-file-upload" % "9.9.3"
 )
 
 MochaKeys.requires += "./Setup"

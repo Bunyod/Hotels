@@ -1,0 +1,33 @@
+<div class="header">
+    <div class="col-xs-4">
+        <div class="logo">
+            <a href="index.html"><img src="/assets/images/logo.png"></a>
+        </div>
+    </div>
+    <div class="col-xs-8 header_right">
+        <span class="menu"></span>
+        <div class="top-menu">
+            <ul>
+                <li>
+                    <a ui-sref="root.home" class="active scroll"><i class="fa fa-home"> </i>Home</a>
+                </li>
+                <li>
+                    <a ui-sref="root.authors">
+                    <i class="fa fa-star"> </i> Hotel Actions</a>
+                </li>
+                <li><a ui-sref="root.services"><i class="fa fa-thumbs-up"> </i>Gellery</a></li>
+                <div class="clearfix"></div>
+            </ul>
+        </div>
+            <!-- script for menu -->
+        <script>
+        $("span.menu").click(function() {
+        $(".top-menu").slideToggle( "slow", function() {
+        // Animation complete.
+        });
+        });
+        </script>
+            <!-- script for menu -->
+    </div>
+    <div class="clearfix"> </div>
+</div>

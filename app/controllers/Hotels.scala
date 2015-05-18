@@ -11,6 +11,7 @@ import play.api.mvc._
 import models.JsonFormats._
 import scala.slick.lifted.TableQuery
 import com.typesafe.scalalogging.slf4j.LazyLogging
+import java.io.File
 
 
 /**
@@ -27,6 +28,15 @@ class Hotels extends Controller with HotelAuth {
   val cities = TableQuery[CitiesTable]
   val prices = TableQuery[PriceIntervalsTable]
 
+  def uploadFile = Action(parse.multipartFormData) { request =>
+    request.body.file("fileUpload").map { image =>
+      val videoFilename = image.filename
+      val contentType = image.contentType.get
+      image.ref.moveTo(new File("/home/bunyod/webapp/" + image.filename))
+    }
+
+    Ok("File has been uploaded")
+  }
 
   def allHotels = DBAction { implicit rs =>
 
