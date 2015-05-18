@@ -15,7 +15,7 @@ POST        /users/add                     @controllers.Users.addUser
 GET         /hotels/list                   @controllers.Hotels.allHotels
 GET         /hotels/premiums               @controllers.Hotels.premiumHotels
 POST        /hotels/add                    @controllers.Hotels.addHotel
-POST        /hotels/upload                 @controllers.Hotels.uploadFile
+POST        /hotel/images                  @controllers.Hotels.uploadFile
 
 GET         /hotelTypes/list               @controllers.Hotels.hotelTypesList
 POST        /hotelTypes/add                @controllers.Hotels.addHotelType

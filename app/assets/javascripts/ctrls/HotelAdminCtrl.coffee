@@ -1,9 +1,9 @@
 angular.module('myApp')
 .controller 'HotelAdminCtrl', class
   ($scope, $http) ->
-    $scope.options = url: url
+    $scope.options = '/hotel/images'
     $scope.loadingFiles = true
-    $http.get('/hotels/upload').then ((response) ->
+    $http.get('/hotel/images').then ((response) ->
       $scope.loadingFiles = false
       $scope.queue = response.data.files or []
       return

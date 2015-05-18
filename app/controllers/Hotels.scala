@@ -12,6 +12,7 @@ import models.JsonFormats._
 import scala.slick.lifted.TableQuery
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import java.io.File
+import org.apache.commons.io.FileUtils
 
 
 /**
@@ -29,12 +30,12 @@ class Hotels extends Controller with HotelAuth {
   val prices = TableQuery[PriceIntervalsTable]
 
   def uploadFile = Action(parse.multipartFormData) { request =>
-    request.body.file("fileUpload").map { image =>
-      val videoFilename = image.filename
-      val contentType = image.contentType.get
-      image.ref.moveTo(new File("/home/bunyod/webapp/" + image.filename))
+    Logger.info(s"FileUploading = ${request.body.files}")
+    val images = request.body.files.foreach {
+      img =>
+        img.ref.moveTo(new File("/tmp/" + img.filename))
+        FileUtils.moveFile(new File("/tmp/" + img.filename), new File("/home/comp17/webapp", img.filename));
     }
-
     Ok("File has been uploaded")
   }
 
@@ -48,10 +49,9 @@ class Hotels extends Controller with HotelAuth {
         HotelsDisplay(hotel, cityName, hotelTypeName, priceName.toString, bottom + " - " + top)
     }
 
-    Logger.info(s"HOTELSS = $searchResult")
+    Logger.info(s"HOTELS = $searchResult")
 
     Ok(toJson(searchResult))
-
   }
 
   def premiumHotels = DBAction { implicit rs =>
@@ -65,10 +65,8 @@ class Hotels extends Controller with HotelAuth {
         HotelsDisplay(hotel, cityName, hotelTypeName, priceName.toString, bottom + " - " + top)
     }
 
-    Logger.info(s"HOTELSS = $searchResult")
-
+    Logger.info(s"HOTELS = $searchResult")
     Ok(toJson(searchResult))
-
   }
 
   def addHotel = AuthJsAction(AuthorityKey -> hasRole(UserRoleEnum.ADMIN)) { implicit rs =>

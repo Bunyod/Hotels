@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "2.1.0" withJavadoc() withSources(),
   "com.typesafe.play" %% "play-slick" % "0.8.0" withJavadoc() withSources(),
   "org.postgresql" % "postgresql" % "9.3-1100-jdbc4",
+  "commons-io" % "commons-io" % "2.3",
   // Logging
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "ch.qos.logback" % "logback-classic" % "1.0.13",
@@ -35,8 +36,7 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "roboto-fontface" % "0.3.0",
   "org.webjars.bower" % "angular-animate" % "1.3.15",
   "org.webjars" % "angular-strap" % "2.2.1",
-  "org.webjars" % "angular-ui-router" % "0.2.0",
-  "org.webjars.bower" % "blueimp-file-upload" % "9.9.3"
+  "org.webjars" % "angular-ui-router" % "0.2.0"
 )
 
 MochaKeys.requires += "./Setup"
