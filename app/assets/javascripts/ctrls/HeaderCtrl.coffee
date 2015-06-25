@@ -3,7 +3,7 @@ angular.module('myApp')
   constructor: ($log, $scope, $state) ->
     vm = @
 
-#    vm.logout = ->
-#      HeaderSvc.logout()
-#      .then () ->
-#        $state.go('root.home')
+    vm.logout = ->
+      HeaderSvc.logout()
+      .then () ->
+        $state.go('root.home')

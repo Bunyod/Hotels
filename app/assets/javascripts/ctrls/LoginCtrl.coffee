@@ -1,24 +1,24 @@
-class LoginCtrl
+angular.module('myApp.controllers')
+.controller 'LoginCtrl', class
+  constructor: ($log, $scope, $state, Users) ->
+      vm = @
 
-    constructor: ($scope, Users) ->
-        $scope.credential = {}
+      vm.signIn = (credential) =>
+          login = credential.login
+          pass = credential.password
+          if !login or !pass
+              alert("Please enter login and password.")
+              return no
 
-        $scope.signIn = () ->
-            login = $scope.credential.login
-            pass = $scope.credential.password
-            if !login or !pass
-                alert("Please enter login and password.")
-                return no
+          loginPass =
+              login: login
+              password: pass
 
-            loginPass =
-                login: login
-                password: pass
+          $log.info(loginPass)
 
-            Users.signIn(loginPass, () ->
-                window.location = "/#" + $scope.Glob.Route.Content.All
-                window.location.reload()
-            , (error) ->
-                alert("Incorrect login or password.")
-            )
-
-controllersModule.controller('LoginCtrl', LoginCtrl)
+          Users.signIn(loginPass, (data) =>
+              if data
+                  $state.go('root.home')
+              else
+                  alert("Incorrect login or password.")
+          ).$promise

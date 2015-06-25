@@ -25,15 +25,21 @@ angular.module('myApp')
     data:
       pageTitle: 'Home'
   )
-  $stateProvider.state("root.about",
-    url: "/about"
+  $stateProvider.state("root.signin",
+    url: "/signin"
     views:
       'main@':
-        controller: "UserCtrl"
+        controller: "LoginCtrl"
         controllerAs: "vm"
-        templateUrl: "assets/partials/authors.html"
+        templateUrl: "assets/partials/signin.html"
+      'header@':
+        templateUrl: 'assets/partials/auth-header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'hec'
+      'footer@':
+        templateUrl: 'assets/partials/auth-footer.tpl.html'
     data:
-      pageTitle: "About")
+      pageTitle: "Sign in")
   $stateProvider.state("root.services",
     url: "/services"
     views:
@@ -50,13 +56,29 @@ angular.module('myApp')
       'main@':
         controller: "SearchResultCtrl"
         controllerAs: "vm"
-        templateUrl: "assets/partials/search_result.html"
+        templateUrl: "assets/partials/search-result.html"
       'header@':
         templateUrl: 'assets/partials/header.tpl.html'
         controller: 'HeaderCtrl'
         controllerAs: 'vm'
     data:
       pageTitle: 'Search Hotels'
+  )
+  $stateProvider.state("root.add",
+    url: "/hotel/administration"
+    views:
+      'main@':
+        controller: "HotelAdminCtrl"
+        controllerAs: "vm"
+        templateUrl: "assets/partials/administration.html"
+    'header@':
+      templateUrl: 'assets/partials/admin-header.tpl.html'
+      controller: 'HeaderCtrl'
+      controllerAs: 'hec'
+    'footer@':
+      templateUrl: 'assets/partials/admin-footer.tpl.html'
+    data:
+      pageTitle: 'Administration Page'
   )
   $stateProvider.state("root.details",
     url: "/details?cityId"
@@ -82,7 +104,9 @@ angular.module('myApp')
       'header@':
         templateUrl: 'assets/partials/admin-header.tpl.html'
         controller: 'HeaderCtrl'
-        controllerAs: 'vm'
+        controllerAs: 'hec'
+      'footer@':
+        templateUrl: 'assets/partials/admin-footer.tpl.html'
     data:
-      pageTitle: 'Adminstration Page'
+      pageTitle: 'Administration Page'
   )

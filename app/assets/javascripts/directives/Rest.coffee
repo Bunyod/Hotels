@@ -6,7 +6,7 @@ angular.module('myApp')
                 'query': {method: 'GET'}
                 'roles': {method: 'GET', url: '/users/roles', isArray: true},
                 'states': {method: 'GET', url: '/users/states', isArray: true},
-                'signIn': {method: 'POST', url: '/signIn'}
+                'signIn': {method: 'POST', url: '/users/signIn'}
             }
     )
 ])
@@ -24,7 +24,7 @@ angular.module('myApp')
         'findHotel': {method: 'GET', url: '/search/params'}
       }
     )
-  ])
+])
 
 .factory('Hotels', ['$resource', ($resource) ->
     $resource('/hotels/:id', id: '@id',
@@ -35,7 +35,9 @@ angular.module('myApp')
         'premiums': {method: 'GET', url: '/hotels/premiums', isArray: true},
         'add': {method: 'POST', url: 'hotels/add'},
         'cities': {method: 'GET', url:'/search/cities', isArray: true},
-        'details': {method: 'GET', url:'/hotel/:id/details/'}
+        'hotelTypes': {method: 'GET', url:'hotelTypes/list', isArray: true},
+        'details': {method: 'GET', url:'/hotel/:id/details/'},
+        'administration': {method: 'POST', url:'/hotel/administration'}
       }
     )
-  ])
+])
