@@ -118,6 +118,10 @@ class Hotels extends Controller with HotelAuth {
     Ok(toJson(roomTypes.list))
   }
 
+  def priceIntervals = DBAction { implicit rs =>
+    Ok(toJson(prices.list))
+  }
+
   def addRoomType = DBAction(parse.json) { implicit rs =>
     rs.request.body.validate[Room].map { room =>
       val roomId = (rooms returning rooms.map(_.id)) += room
@@ -142,6 +146,11 @@ class Hotels extends Controller with HotelAuth {
         BadRequest(errors.toString)
       }
     }
+  }
+
+  def showHotelDetails(hotelId: Int) = DBAction { implicit rs =>
+    val hotel = hotels.filter(_.id === hotelId)
+    Ok(toJson(hotel.list))
   }
 
 }

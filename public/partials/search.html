@@ -1,39 +1,84 @@
 <div class="details" ng-controller="SearchCtrl as vm">
     <div class="container">
         <form ng-submit="sendSearchParams()">
-            <div class="col-md-10 dropdown-buttons">
+            <div class="row">
+                <div class="col-md-10 dropdown-buttons">
+                    <div class="col-md-4 dropdown-button">
+                        <div class="form-group section_room" >
+                            <select class="form-control" ng-model="cityId" class="frm-field required">
+                                <option value="">
+                                    Select City
+                                </option>
+                                <option value={{city.id}}
+                                        ng-repeat="city in Glob.Cities">
+                                    {{city.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 dropdown-button">
+                        <div class="form-group section_room">
+                            <input type="text" class="form-control" data-date-format="MM/dd/yyyy" date-type="string" data-autoclose="1"
+                                   ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="From" bs-datepicker>
+                        </div>
+                    </div>
+                    <div class="col-md-4 dropdown-button">
+                        <div class="form-group section_room">
+                            <input type="text" class="form-control" data-date-format="MM/dd/yyyy" data-autoclose="1" date-type="string"
+                                   ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="Until" bs-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
                 <div class="col-md-4 dropdown-button">
-                    <div class="form-group section_room" >
-                        <select class="form-control" ng-model="cityId" class="frm-field required">
+                    <div class="form-group section_room search_filter" >
+                        <select class="form-control" ng-model="hotelTypeId" class="frm-field required">
                             <option value="">
-                                Select City
+                                Select Apartment
                             </option>
-                            <option value={{city.id}}
-                                    ng-repeat="city in Glob.Cities">
-                                {{city.name}}
+                            <option value={{hotelType.id}}
+                                    ng-repeat="hotelType in Glob.HotelTypes">
+                                {{hotelType.name}}
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-4 dropdown-button">
-                    <div class="form-group section_room">
-                        <input type="text" class="form-control" data-date-format="MM/dd/yyyy" date-type="string" data-autoclose="1"
-                               ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="From" bs-datepicker>
+                    <div class="form-group section_room search_filter">
+                        <select class="form-control" ng-model="roomTypeId" class="frm-field required">
+                            <option value="">
+                                Select Rooms
+                            </option>
+                            <option value={{room.id}}
+                                    ng-repeat="room in Glob.Rooms">
+                                {{room.name}}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4 dropdown-button">
-                    <div class="form-group section_room">
-                        <input type="text" class="form-control" data-date-format="MM/dd/yyyy" data-autoclose="1" date-type="string"
-                               ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="Until" bs-datepicker>
+                    <div class="form-group section_room search_filter">
+                        <select class="form-control" ng-model="priceId" class="frm-field required">
+                            <option value="">
+                                Select Prices
+                            </option>
+                            <option value={{price.id}}
+                                    ng-repeat="price in Glob.Prices">
+                                {{price.name}}
+                            </option>
+                        </select>
                     </div>
                 </div>
+                <div class="col-md-2 submit_button">
+                    <form>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="col-md-2 submit_button">
-                <form>
-                    <input type="submit" value="Search">
-                </form>
             </div>
-            <div class="clearfix"></div>
         </form>
     </div>
 </div>

@@ -19,6 +19,13 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.0.13",
   "ch.qos.logback" % "logback-core" % "1.0.13",
   "org.slf4j" % "log4j-over-slf4j" % "1.7.5",
+  // Akka
+  "com.typesafe.akka" %% "akka-actor" % "2.3.3",
+  "com.typesafe.akka" %% "akka-remote" % "2.3.3",
+  "com.typesafe.akka" %% "akka-slf4j" % "2.3.3",
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.3",
+  // Email
+  "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0",
   // Auth
   "jp.t2v" %% "play2-auth" % "0.12.0" withSources() withJavadoc(),
   "jp.t2v" %% "play2-auth-test" % "0.12.0" % "test" withSources() withJavadoc(),

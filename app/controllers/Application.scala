@@ -36,7 +36,6 @@ object Application extends Controller with LoginLogout with OptionalAuthElement 
   }
 
   def index() = StackAction { implicit request =>
-    logger.info(s"Hiiiiiiiiiiiiiiiiiiii!!!")
     loggedIn match {
       case Some(user) =>
         Ok(html.index("main"))

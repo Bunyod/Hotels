@@ -445,6 +445,12 @@ select {
     -moz-border-radius: 3px;
     -o-border-radius: 3px;
 }
+.search_filter select {
+    font-size: 12px!important;
+    width: 80%;
+    margin-left: -10px;
+}
+
 .submit_button input[type="submit"] {
     color: #fff;
     text-transform: uppercase;

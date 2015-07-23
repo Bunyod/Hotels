@@ -20,12 +20,17 @@ POST        /hotel/images                  @controllers.Hotels.uploadFile
 GET         /hotelTypes/list               @controllers.Hotels.hotelTypesList
 POST        /hotelTypes/add                @controllers.Hotels.addHotelType
 
+GET         /price/list                    @controllers.Hotels.priceIntervals
+#POST        /priceIntervals/add            @controllers.Hotels.addPriceInterval
+
+
 GET         /hotel/:id/reviews/list        @controllers.Hotels.hotelReviews(id: Int)
 POST        /hotel/:id/reviews/add         @controllers.Hotels.addReview(id: Int)
 
+
 GET         /hotel/:id/rooms/list          @controllers.Hotels.hotelRooms(id: Int)
 POST        /hotel/:id/rooms/add           @controllers.Hotels.addRoom(id: Int)
-POST        /hotel/:id/details             @controllers.Hotels.addRoom(id: Int)
+GET         /hotel/:id/details             @controllers.Hotels.showHotelDetails(id: Int)
 
 GET         /hotels/roomTypes/list         @controllers.Hotels.roomTypeList
 POST        /hotels/roomTypes/add          @controllers.Hotels.addRoomType
@@ -36,6 +41,7 @@ POST        /reservations/add              @controllers.Reservations.addReservat
 GET         /search/params                 @controllers.Search.findHotelsByParams(cityId: Int, hotelTypeId: Int, starRating: Int)
 GET         /search/all                    @controllers.Search.allHotels
 GET         /search/cities                 @controllers.Search.getCities
+GET         /users/sendEmail               @controllers.Users.sendPlainMailWithDefaultConfig(address, text, subject)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.at(path="/public", file)

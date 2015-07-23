@@ -1,24 +1,30 @@
 package controllers
 
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import play.api.Logger
 import play.api.mvc._
 import play.api.db.slick._
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.libs.json.Json._
+import services.MessageManager.SendEmail
 import scala.slick.lifted.TableQuery
 import play.api._
+import akka.pattern.ask
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.json.Json._
 
 
 /**
  * Created by bunyod on 1/19/15.
  */
 
-class Users extends Controller with HotelAuth {
+class Users extends Controller with HotelAuth with LazyLogging {
 
 
   import models._
   import models.JsonFormats._
+  import services.AppContext._
 
   val users = TableQuery[UsersTable]
 
@@ -66,6 +72,12 @@ class Users extends Controller with HotelAuth {
     }.recoverTotal { errors =>
       BadRequest(errors.toString)
     }
+  }
+
+  def sendPlainMailWithDefaultConfig(address: String, text: String, emailSubject: String) = DBAction { implicit rs =>
+    logger.debug("entry")
+    messageManager ! SendEmail(address, text, emailSubject)
+    Ok("Email successfully was sent")
   }
 
 }

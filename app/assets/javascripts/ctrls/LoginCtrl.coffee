@@ -18,7 +18,7 @@ angular.module('myApp.controllers')
 
           Users.signIn(loginPass, (data) =>
               if data
-                  $state.go('root.home')
+                  $state.go('root.w-home')
               else
                   alert("Incorrect login or password.")
           ).$promise

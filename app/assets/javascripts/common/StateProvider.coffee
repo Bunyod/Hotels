@@ -20,12 +20,55 @@ angular.module('myApp')
   $stateProvider.state("root.home",
     url: "/home"
     views:
-      "main@":
+      'main@':
         templateUrl: "assets/partials/main.tpl.html"
     data:
       pageTitle: 'Home'
   )
+  $stateProvider.state("root.w-home",
+    url: "/uhome"
+    views:
+      'main@':
+        templateUrl: "assets/partials/main.tpl.html"
+      'header@':
+        templateUrl: 'assets/partials/wauth-header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'hec'
+    data:
+      pageTitle: 'Home'
+
+  )
   $stateProvider.state("root.signin",
+    url: "/signin"
+    views:
+      'main@':
+        controller: "LoginCtrl"
+        controllerAs: "vm"
+        templateUrl: "assets/partials/signin.html"
+      'header@':
+        templateUrl: 'assets/partials/auth-header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'hec'
+      'footer@':
+        templateUrl: 'assets/partials/auth-footer.tpl.html'
+    data:
+      pageTitle: "Sign up")
+  $stateProvider.state("root.signup",
+    url: "/signin"
+    views:
+      'main@':
+        controller: "SignUpCtrl"
+        controllerAs: "vm"
+        templateUrl: "assets/partials/signup.html"
+      'header@':
+        templateUrl: 'assets/partials/auth-header.tpl.html'
+        controller: 'HeaderCtrl'
+        controllerAs: 'hec'
+      'footer@':
+        templateUrl: 'assets/partials/auth-footer.tpl.html'
+    data:
+      pageTitle: "Sign up")
+  $stateProvider.state("root.signout",
     url: "/signin"
     views:
       'main@':
@@ -81,10 +124,10 @@ angular.module('myApp')
       pageTitle: 'Administration Page'
   )
   $stateProvider.state("root.details",
-    url: "/details?cityId"
+    url: "/hotel?hotelId/details"
     views:
       'main@':
-        controller: "HotelDetailsCtrl"
+        controller: "HotelOrderedCtrl"
         controllerAs: "vm"
         templateUrl: "assets/partials/single.html"
       'header@':

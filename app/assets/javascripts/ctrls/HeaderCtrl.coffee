@@ -1,9 +1,9 @@
 angular.module('myApp')
 .controller 'HeaderCtrl', class
-  constructor: ($log, $scope, $state) ->
+  constructor: ($log, $scope, $state, Users) ->
     vm = @
 
-    vm.logout = ->
-      HeaderSvc.logout()
-      .then () ->
-        $state.go('root.home')
+    vm.signout = () =>
+        Users.signOut((data) =>
+            $state.go('root.home')
+        ).$promise

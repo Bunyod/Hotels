@@ -1,0 +1,174 @@
+<form id="CreateHotelForm" ng-controller="HotelAdminCtrl as vm" name="CreateHotelForm" class="form-horizontal" role="form"
+	  ng-submit="vm.createHotel(hotel)">
+
+	<!-- TODO: remove this line -->
+	<input type="hidden" class="form-control" name="date">
+
+	<div class="form-group" style="margin-top: 100px">
+		<label id="lbl_name" for="hotelName" class="col-sm-3 control-label">Hotel name</label>
+
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="hotelName" id="hotelName"
+				   placeholder="" ng-model="hotel.name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_phone" for="phone" class="col-sm-3 control-label">Phone</label>
+
+		<div class="col-sm-8">
+			<input type="tel" class="form-control" name="phone" id="phone"
+				   placeholder="" ng-model="hotel.phone">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_fax" for="fax" class="col-sm-3 control-label">Fax</label>
+
+		<div class="col-sm-8">
+			<input type="tel" class="form-control" name="fax" id="fax"
+				   placeholder="" ng-model="hotel.fax">
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_email" for="email" class="col-sm-3 control-label">E-mail</label>
+
+		<div class="col-sm-8">
+			<input type="email" class="form-control" name="email" id="email"
+				   placeholder="" ng-model="hotel.email">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_website" for="website" class="col-sm-3 control-label">Website</label>
+
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="website" id="website"
+				   placeholder="" ng-model="hotel.website">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_rate" for="rate" class="col-sm-3 control-label">Rate</label>
+
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="rate" id="rate"
+				   placeholder="" ng-model="hotel.rate">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_star" for="star" class="col-sm-3 control-label">Star</label>
+
+		<div class="col-sm-8">
+			<input type="number" class="form-control" name="star" id="star"
+				   placeholder="" ng-model="hotel.star">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_distcenter" for="distCenter" class="col-sm-3 control-label">Distance from center</label>
+
+		<div class="col-sm-8">
+			<input type="number" class="form-control" name="distCenter" id="distCenter"
+				   placeholder="" smart-float ng-model="hotel.distCenter">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_rooms" for="guestrooms" class="col-sm-3 control-label">Guest rooms</label>
+
+		<div class="col-sm-8">
+			<input type="number" class="form-control" name="guestrooms" id="guestrooms"
+				   placeholder="" ng-model="hotel.rooms">
+		</div>
+	</div>
+
+
+	<div class="form-group">
+		<label id="lbl_hotelType" class="col-sm-3 control-label">Hotel type</label>
+
+        <div class="col-sm-8">
+            <select class="form-control " ng-model="hotel.hotelType"
+                    required="" ng-options="hType.id as hType.name for hType in vm.hotelTypes" >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+	</div>
+
+	<div class="form-group">
+		<label id="lbl_activities" for="activities" class="col-sm-3 control-label">Activities</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="activities" id="activities"
+				   placeholder="Pool Table, Sauna, Fitness Center, Spa, Massage, Turkish/Steam Bath, Indoor Pool (all year)" ng-model="hotel.activities">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_food" for="foodAndDrinks" class="col-sm-3 control-label">Food$Drink</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="foodAndDrinks" id="foodAndDrinks"
+				   placeholder="Bar, Breakfast in the Room, Snack Bar, Special Diet Meals (upon request)" ng-model="hotel.foodAndDrinks">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_inet" for="inet" class="col-sm-3 control-label">Internet</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="internet" id="inet"
+				   placeholder="Free! WiFi is available in all areas and is free of charge." ng-model="hotel.inet">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_parking" for="parking" class="col-sm-3 control-label">Parking</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="parking" id="parking"
+				   placeholder="Free! Free private parking is available on site (reservation is needed)." ng-model="hotel.parking">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_services" for="services" class="col-sm-3 control-label">Services</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="services" id="services"
+				   placeholder="Room Service, Packed Lunches, Car Rental, Shuttle Service (surcharge), Airport Shuttle (surcharge), 24-Hour Front Desk, Currency Exchange, Tour Desk, Ticket Service, Baggage Storage, ATM on site, Concierge Service, Shared Lounge/TV Area, Laundry, Ironing Service, Shoeshine, Daily Housekeeping, Meeting/Banquet Facilities, Business Center, Fax/Photocopying, VIP Room Facilities, Honeymoon Suite" ng-model="hotel.services">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_general" for="general" class="col-sm-3 control-label">General</label>
+
+		<div class="col-sm-8">
+			<textarea class="form-control" name="general" id="general"
+				   placeholder="Newspapers, Safe, Shops (on site), Non-smoking Rooms, Facilities for Disabled Guests, Elevator, Soundproof Rooms, Heating, Designated Smoking Area" ng-model="hotel.general">
+			</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_checkin" for="check-in" class="col-sm-3 control-label">Check-in</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="checkIn" id="check-in"
+				   placeholder="" ng-model="hotel.checkIn">
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lbl_checkout" for="check-out" class="col-sm-3 control-label">Check-out</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="checkOut" id="check-out"
+				   placeholder="" ng-model="hotel.checkOut">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-8 text-right">
+			<a ng-href="/#" id="btn_cancel" class="btn btn-warning">Cancel</a>
+			<button type="submit" class="btn btn-success" id="btn_create">Save</button>
+		</div>
+	</div>
+
+</form>
